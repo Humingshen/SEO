@@ -14,6 +14,22 @@ namespace Elite
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                "ActionOnly",
+                "{action}/{id}",
+                new { controller = "CN", action = "Index", id = UrlParameter.Optional },
+                new { action = "Index|About|Contact|Brand|Service|Product|News|Media" }
+            );
+            routes.MapRoute(
+                name: "CN",
+                url: "zh-cn/{action}/{id}",
+                defaults: new { controller = "CN", action = "Index", id = UrlParameter.Optional }
+            );
+            routes.MapRoute(
+                 name: "EN",
+                 url: "en-us/{action}/{id}",
+                 defaults: new { controller = "US", action = "Index", id = UrlParameter.Optional }
+             );
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }

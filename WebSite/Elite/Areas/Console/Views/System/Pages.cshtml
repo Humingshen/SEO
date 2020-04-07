@@ -1,0 +1,253 @@
+﻿
+@{
+    ViewBag.Title = "Pages";
+    Layout = "~/Areas/Console/Views/Shared/_PageLayout.cshtml";
+}
+
+<style type="text/css">
+    .tdImg {
+        width: 50px;
+        height: 50px;
+        max-width: none;
+        cursor: zoom-in;
+    }
+</style>
+
+<!-- 正文开始 -->
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-card-body">
+            <!-- 表格顶部工具栏 -->
+            <div class="layui-form toolbar">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label w-auto">名称：</label>
+                        <div class="layui-input-inline mr0">
+                            <input name="keyword" class="layui-input" type="text" placeholder="输入关键词" />
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <button class="layui-btn icon-btn" lay-filter="searchSubmit" lay-submit>
+                            <i class="layui-icon">&#xe615;</i>搜索
+                        </button>
+                        <button id="btnAdd" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>添加</button>
+                    </div>
+                </div>
+            </div>
+            <table class="layui-table" id="experimentTypeTable" lay-filter="experimentTypeTable"></table>
+        </div>
+    </div>
+    <blockquote class="layui-elem-quote layui-text" style="margin-top: 15px;background: #fff;">
+        说明
+    </blockquote>
+</div>
+
+<!-- 表格操作列 -->
+<script type="text/html" id="tableBar">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+<!-- 表单弹窗 -->
+<script type="text/html" id="modelExpType">
+    <form id="modelExpTypeForm" lay-filter="modelExpTypeForm" class="layui-form model-form">
+        <input name="id" type="hidden" />
+        <div class="layui-form-item">
+            <label class="layui-form-label">标题：</label>
+            <div class="layui-input-block">
+                <input name="pageTitle" placeholder="输入标题" type="text" class="layui-input" maxlength="20"
+                       lay-verType="tips" lay-verify="required" />
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">代码：</label>
+            <div class="layui-input-block">
+                <input name="code" placeholder="输入Code" type="text" class="layui-input" maxlength="20"
+                       lay-verType="tips" lay-verify="required" />
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">版本：</label>
+            <div class="layui-input-block">
+                <select name="version" lay-vertype="tips" lay-verify="required" required="">
+                    <option value="">请选版本</option>
+                    <option value="v1">v1</option>
+                </select>
+                <div class="layui-unselect layui-form-select">
+                    <div class="layui-select-title">
+                        <input type="text" placeholder="请选分类" value="" readonly="" class="layui-input layui-unselect"><i class="layui-edge"></i>
+                    </div>
+                    <dl class="layui-anim layui-anim-upbit">
+                        <dd lay-value="" class="layui-select-tips">请选版本</dd>
+                        <dd lay-value="v1" class="">v1</dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">排序：</label>
+            <div class="layui-input-block">
+                <input name="seq" placeholder="输入排序" type="number" class="layui-input"
+                       lay-verType="tips" lay-verify="required" />
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">SEO标题：</label>
+            <div class="layui-input-block">
+                <textarea name="seoTitle" placeholder="输入标题" class="layui-textarea" lay-vertype="tips" lay-verify="required" required=""></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">SEO关键词：</label>
+            <div class="layui-input-block">
+                <textarea name="seoKeyWords" placeholder="输入关键词" class="layui-textarea" lay-vertype="tips" lay-verify="required" required=""></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">摘要：</label>
+            <div class="layui-input-block">
+                <textarea name="seoDescriptions" placeholder="输入摘要" class="layui-textarea" lay-vertype="tips" lay-verify="required" required=""></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">更新时间：</label>
+            <div class="layui-input-block">
+                <input name="updated" type="datetime" class="layui-input layui-disabled"
+                       lay-verType="tips" lay-verify="" readonly="readonly" />
+            </div>
+        </div>
+        <div class="layui-form-item text-right">
+            <button class="layui-btn layui-btn-primary" type="button" ew-event="closePageDialog">取消</button>
+            <button class="layui-btn" lay-filter="modelExpTypeSubmit" lay-submit>保存</button>
+        </div>
+    </form>
+</script>
+
+
+@section scripts{
+    <script>
+        layui.use(['layer', 'form', 'table', 'util', 'admin', 'tableX', 'laydate', 'element', 'upload', 'fileChoose'], function () {
+            var $ = layui.jquery;
+            var layer = layui.layer;
+            var form = layui.form;
+            var table = layui.table;
+            var util = layui.util;
+            var admin = layui.admin;
+            var tableX = layui.tableX;
+            var laydate = layui.laydate;
+            var element = layui.element;
+            var upload = layui.upload;
+            var fileChoose = layui.fileChoose;
+
+            // 渲染表格
+            var insTb = tableX.render({
+                elem: '#experimentTypeTable',
+                url: '/api/v1/pages',
+                headers: { 'Authorization': localStorage.getItem("token") },
+                page: true,
+                cellMinWidth: 100,
+                cols: [[
+                    { type: 'numbers' },
+                    { field: 'code', title: '代码' , minWidth: 80, width: 80 },
+                    { field: 'pageTitle', title: '标题', sort: true },
+                    { field: 'seoTitle', title: 'SEO标题', sort: true },
+                    { field: 'seoKeyWords', title: 'SEO词', sort: true },
+                    { field: 'seoDescriptions', title: 'SEO描述', sort: true },
+                    { field: 'version', title: '版本', minWidth: 60, width: 60 },
+                    { field: 'seq', title: '排序', minWidth: 60, width: 60 },
+                    { align: 'center', title: '操作', toolbar: '#tableBar', minWidth: 130, width: 180 }
+                ]]
+            });
+
+            // 搜索
+            form.on('submit(searchSubmit)', function (data) {
+                insTb.reload({ where: data.field, page: { curr: 1 } });
+            });
+
+            // 添加
+            $("#btnAdd").click(function () {
+                showEditModel();
+            });
+
+            // 工具条点击事件
+            table.on('tool(experimentTypeTable)', function (obj) {
+
+                var data = obj.data;
+                //alert(JSON.stringify(data));
+                var layEvent = obj.event;
+                if (layEvent == 'edit') {
+                    showEditModel(data);
+                } else if (layEvent == 'del') {
+                    doDel(data.id);
+                }
+            });
+            // 显示表单弹窗
+            function showEditModel(expTpe) {
+                admin.open({
+                    type: 1,
+                    title: (expTpe ? '修改' : '添加') + '栏目',
+                    content: $('#modelExpType').html(),
+                    area: '700px',
+                    success: function (layero, dIndex) {
+                       
+                        var url =  '/api/v1/pages';
+                        // 回显数据
+                        form.val('modelExpTypeForm', expTpe);
+                        // 表单提交事件
+                        form.on('submit(modelExpTypeSubmit)', function (data) {
+                            layer.load(2);
+                            $.ajax({
+                                headers: {
+                                    'Authorization': localStorage.getItem("token")
+                                },
+                                type: "POST",
+                                url: url,
+                                dataType: "JSON",
+                                data: data.field,
+                                success: function (res) {
+                                    layer.closeAll('loading');
+                                    if (res.code == 0) {
+                                        layer.close(dIndex);
+                                        insTb.reload({ page: { curr: 1 } });
+                                        layer.msg(res.msg, { icon: 1 });
+                                    } else {
+                                        layer.msg(res.msg, { icon: 2 });
+                                    }
+                                }
+                            });
+                            return false;
+                        });
+
+                    }
+                });
+            }
+            
+            // 删除
+            function doDel(experimentTypeId) {
+                layer.confirm('确定要删除吗？', {
+                    shade: .1,
+                    skin: 'layui-layer-admin'
+                }, function (i) {
+                    layer.load(2);
+                    $.ajax({
+                        headers: {
+                            'Authorization': localStorage.getItem("token")
+                        },
+                        type: "POST",
+                        url: "/api/v1/pagesDel",
+                        data: { id: experimentTypeId },
+                        success: function (res) {
+                            layer.closeAll('loading');
+                            if (res.code == 0) {
+                                layer.msg(res.msg, { icon: 1 });
+                                insTb.reload();
+                            } else {
+                                layer.msg(res.msg, { icon: 2 });
+                            }
+                        }
+                    });
+                });
+            }
+        });
+
+    </script>
+}

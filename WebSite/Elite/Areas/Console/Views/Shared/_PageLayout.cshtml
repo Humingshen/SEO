@@ -1,0 +1,18 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title - 管理控制台</title>
+    <link href="~/Content/assets/libs/layui/css/layui.css" rel="stylesheet" />
+    <link href="~/Content/assets/module/admin.css" rel="stylesheet" />
+</head>
+<body>
+    <div>
+        @RenderBody()
+    </div>
+    <script src="~/Content/assets/libs/layui/layui.js?v=315"></script>
+    <script src="~/Content/assets/js/common.js?v=315"></script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

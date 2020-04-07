@@ -12,7 +12,7 @@
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Elite</RootNamespace>
+    <RootNamespace>Hms.Web</RootNamespace>
     <AssemblyName>Elite</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
@@ -45,10 +45,22 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="JWT, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\JWT.3.0.0\lib\net35\JWT.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -129,19 +141,157 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\Controllers\V1Controller.cs" />
+    <Compile Include="API\Controllers\BaseController.cs" />
+    <Compile Include="API\DTOs\BaseRespose.cs" />
+    <Compile Include="API\DTOs\JwtUnit.cs" />
+    <Compile Include="API\DTOs\JwtUser.cs" />
+    <Compile Include="API\DTOs\LoginDTOs.cs" />
+    <Compile Include="API\DTOs\PagesDTOs.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\Console\ConsoleAreaRegistration.cs" />
+    <Compile Include="Areas\Console\Controllers\DefaultController.cs" />
+    <Compile Include="Areas\Console\Controllers\RssController.cs" />
+    <Compile Include="Areas\Console\Controllers\SystemController.cs" />
+    <Compile Include="Controllers\CNController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\USController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Persistence\Model1.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model1.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Persistence\Model1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Persistence\Model1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model1.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Persistence\T_Admin.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Persistence\T_Article.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Persistence\T_Comment.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Persistence\T_Elements.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Persistence\T_Pages.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\assets\css\login.css" />
+    <Content Include="Content\assets\images\bg_login2.png" />
+    <Content Include="Content\assets\images\head.png" />
+    <Content Include="Content\assets\images\homepic1.png" />
+    <Content Include="Content\assets\images\homepic2.png" />
+    <Content Include="Content\assets\images\homepic3.png" />
+    <Content Include="Content\assets\images\homepic4.png" />
+    <Content Include="Content\assets\images\homepic5.png" />
+    <Content Include="Content\assets\images\homepic6.png" />
+    <Content Include="Content\assets\images\logo.png" />
+    <Content Include="Content\assets\js\common.js" />
+    <Content Include="Content\assets\libs\echarts\echarts.min.js" />
+    <Content Include="Content\assets\libs\echarts\echartsTheme.js" />
+    <Content Include="Content\assets\libs\layui\css\layui.css" />
+    <Content Include="Content\assets\libs\layui\css\modules\laydate\default\laydate.css" />
+    <Content Include="Content\assets\libs\layui\css\modules\layer\default\icon.png" />
+    <Content Include="Content\assets\libs\layui\css\modules\layer\default\layer.css" />
+    <Content Include="Content\assets\libs\layui\css\modules\layer\default\loading-1.gif" />
+    <Content Include="Content\assets\libs\layui\css\modules\layer\default\loading-2.gif" />
+    <Content Include="Content\assets\libs\layui\layui.js" />
+    <Content Include="Content\assets\libs\layui\lay\modules\element.js" />
+    <Content Include="Content\assets\libs\layui\lay\modules\form.js" />
+    <Content Include="Content\assets\libs\layui\lay\modules\jquery.js" />
+    <Content Include="Content\assets\libs\layui\lay\modules\laydate - 复制.js" />
+    <Content Include="Content\assets\libs\layui\lay\modules\laydate.js" />
+    <Content Include="Content\assets\libs\layui\lay\modules\layer.js" />
+    <Content Include="Content\assets\libs\layui\lay\modules\laypage.js" />
+    <Content Include="Content\assets\libs\layui\lay\modules\laytpl.js" />
+    <Content Include="Content\assets\libs\layui\lay\modules\table.js" />
+    <Content Include="Content\assets\libs\layui\lay\modules\upload - 复制.js" />
+    <Content Include="Content\assets\libs\layui\lay\modules\upload.js" />
+    <Content Include="Content\assets\libs\layui\lay\modules\util.js" />
+    <Content Include="Content\assets\libs\layui\lay\modules\wangEditor.js" />
+    <Content Include="Content\assets\module\admin-a.js" />
+    <Content Include="Content\assets\module\admin.css" />
+    <Content Include="Content\assets\module\admin.js" />
+    <Content Include="Content\assets\module\contextMenu.js" />
+    <Content Include="Content\assets\module\fileChoose\fileChoose.js" />
+    <Content Include="Content\assets\module\img\icon_date.png" />
+    <Content Include="Content\assets\module\index.js" />
+    <Content Include="Content\assets\module\tableX.js" />
+    <Content Include="Content\assets\module\zTree\css\zTreeStyle\img\line_conn.gif" />
+    <Content Include="Content\assets\module\zTree\css\zTreeStyle\img\zTreeStandard.png" />
+    <Content Include="Content\assets\module\zTree\css\zTreeStyle\zTreeStyle.css" />
+    <Content Include="Content\assets\module\zTree\zTree.js" />
+    <Content Include="Content\v1\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\v1\images\01.jpg" />
+    <Content Include="Content\v1\images\02.jpg" />
+    <Content Include="Content\v1\images\03.jpg" />
+    <Content Include="Content\v1\images\04.jpg" />
+    <Content Include="Content\v1\images\05.jpg" />
+    <Content Include="Content\v1\images\06.jpg" />
+    <Content Include="Content\v1\images\07.jpg" />
+    <Content Include="Content\v1\images\08.jpg" />
+    <Content Include="Content\v1\images\11.jpg" />
+    <Content Include="Content\v1\images\bg.jpg" />
+    <Content Include="Content\v1\images\logo-dark1.png" />
+    <Content Include="Content\v1\images\logo-light1.png" />
+    <Content Include="Content\v1\images\微信图片_20200321151332.png" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Content\v1\css\default.css" />
+    <Content Include="Content\v1\css\select2.min.css" />
+    <Content Include="Content\v1\css\theme.css" />
+    <Content Include="Content\v1\css\ui.fancytree.min.css" />
+    <Content Include="Content\v1\css\website.css" />
+    <Content Include="Content\v1\css\ytplayer.css" />
+    <Content Include="Content\v1\js\bootstrap-datepicker.js" />
+    <Content Include="Content\v1\js\bootstrap.min.js" />
+    <Content Include="Content\v1\js\countdown.min.js" />
+    <Content Include="Content\v1\js\default.js" />
+    <Content Include="Content\v1\js\email-decode.min.js" />
+    <Content Include="Content\v1\js\flexslider.min.js" />
+    <Content Include="Content\v1\js\flickr.js" />
+    <Content Include="Content\v1\js\jquery.min.js" />
+    <Content Include="Content\v1\js\lightbox.min.js" />
+    <Content Include="Content\v1\js\masonry.min.js" />
+    <Content Include="Content\v1\js\parallax.js" />
+    <Content Include="Content\v1\js\rocket-loader.min.js" />
+    <Content Include="Content\v1\js\scripts.js" />
+    <Content Include="Content\v1\js\smooth-scroll.min.js" />
+    <Content Include="Content\v1\js\spectragram.min.js" />
+    <Content Include="Content\v1\js\twitterfetcher.min.js" />
+    <Content Include="Content\v1\js\ytplayer.min.js" />
+    <Content Include="Persistence\Model1.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model1.edmx</DependentUpon>
+      <LastGenOutput>Model1.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Persistence\Model1.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model1.edmx</DependentUpon>
+      <LastGenOutput>Model1.cs</LastGenOutput>
+    </Content>
+    <Content Include="Temples\1.mp3" />
+    <Content Include="Temples\HtmlPage1.html" />
+    <Content Include="Views\sitemap.html" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -153,18 +303,75 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="API\" />
     <Folder Include="App_Data\" />
-    <Folder Include="Content\" />
-    <Folder Include="Models\" />
+    <Folder Include="Temples\Elite\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\Console\Views\Shared\_PageLayout.cshtml" />
+    <Content Include="Areas\Console\Views\Default\Index.cshtml" />
+    <Content Include="Areas\Console\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Console\Views\Web.config" />
+    <Content Include="Areas\Console\Views\Default\Welcome.cshtml" />
+    <Content Include="Areas\Console\Views\Default\ArtEdit.cshtml" />
+    <Content Include="Areas\Console\Views\Default\Article.cshtml" />
+    <Content Include="Areas\Console\Views\Default\Authorize.cshtml" />
+    <Content Include="Areas\Console\Views\Default\Comment.cshtml" />
+    <Content Include="Areas\Console\Views\Default\DownLoad.cshtml" />
+    <Content Include="Areas\Console\Views\Default\File.cshtml" />
+    <Content Include="Areas\Console\Views\Default\Login.cshtml" />
+    <Content Include="Areas\Console\Views\Default\Password.cshtml" />
+    <Content Include="Areas\Console\Views\Default\Product.cshtml" />
+    <Content Include="Areas\Console\Views\Default\Role.cshtml" />
+    <Content Include="Areas\Console\Views\Default\Users.cshtml" />
+    <Content Include="Areas\Console\Views\Default\Video.cshtml" />
+    <Content Include="Areas\Console\Views\Default\Visitors.cshtml" />
+    <Content Include="Content\assets\libs\layui\font\iconfont.ttf" />
+    <Content Include="Content\assets\libs\layui\font\iconfont.woff" />
+    <Content Include="Content\assets\libs\layui\font\iconfont.woff2" />
+    <Content Include="Content\v1\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\v1\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\v1\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\v1\fonts\themify.woff" />
+    <Content Include="Areas\Console\Views\System\Pages.cshtml" />
+    <Content Include="Areas\Console\Views\System\Article.cshtml" />
+    <Content Include="Areas\Console\Views\Rss\Link.cshtml" />
+    <Content Include="Areas\Console\Views\Rss\Content.cshtml" />
+    <Content Include="Areas\Console\Views\Rss\Index.cshtml" />
+    <Content Include="Areas\Console\Views\System\Comment.cshtml" />
+    <Content Include="Areas\Console\Views\System\Element.cshtml" />
+    <Content Include="Areas\Console\Views\System\Product.cshtml" />
+    <Content Include="Areas\Console\Views\Shared\_Layout.cshtml" />
     <None Include="packages.config" />
+    <Content Include="Views\Shared\_Layout_cn.cshtml" />
+    <Content Include="Views\Shared\_Layout_en.cshtml" />
+    <Content Include="Views\CN\Index.cshtml" />
+    <Content Include="Views\CN\About.cshtml" />
+    <Content Include="Views\CN\Contact.cshtml" />
+    <Content Include="Views\CN\Media.cshtml" />
+    <Content Include="Views\CN\News.cshtml" />
+    <Content Include="Views\CN\Service.cshtml" />
+    <Content Include="Views\CN\Product.cshtml" />
+    <Content Include="Views\CN\Brand.cshtml" />
+    <Content Include="Views\US\About.cshtml" />
+    <Content Include="Views\US\Brand.cshtml" />
+    <Content Include="Views\US\Contact.cshtml" />
+    <Content Include="Views\US\Index.cshtml" />
+    <Content Include="Views\US\Media.cshtml" />
+    <Content Include="Views\US\News.cshtml" />
+    <Content Include="Views\US\Product.cshtml" />
+    <Content Include="Views\US\Service.cshtml" />
+    <EntityDeploy Include="Persistence\Model1.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Persistence\Model1.edmx.diagram">
+      <DependentUpon>Model1.edmx</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

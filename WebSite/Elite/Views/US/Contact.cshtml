@@ -1,0 +1,63 @@
+﻿
+@{
+    ViewBag.Title = "Contact Us";
+    Layout = "~/Views/Shared/_Layout_en.cshtml";
+}
+<section class="page-title page-title-1 image-bg overlay parallax">
+    <div class="background-image-holder">
+        <img alt="Background Image" class="background-image" src="https://hbimg.huabanimg.com/bb679146e7c7b830e07cc3dc3e6aa1e84e8ead1279f998-6Pwaol_fw658" />
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 text-center">
+                <h2 class="uppercase mb0">Contact Us</h2>
+            </div>
+        </div>
+
+    </div>
+
+    <ol class="breadcrumb breadcrumb-2">
+        <li>
+            <a href="/en-us/">Home</a>
+        </li>
+        <li class="active">Contact Us</li>
+    </ol>
+</section>
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 col-md-5">
+                <h4 class="uppercase">Get in touch with your questions</h4>
+                <p>
+                    We will reply within 3 working days.
+                </p>
+                <hr>
+                <p>
+                    <a href="~Files/Universal_Pty_Ltd.pdf" target="_blank">REG Number : 2016 / 510450 / 07</a>
+                </p>
+                <h5 class="mb0">China Office</h5>
+                <p>北京市顺义区南法信旭辉空港中心</p><br />
+                <h5 class="mb0">India Office</h5>
+                <p>Level 2 Kalpataru Synergy, <br> Mumbai, 400055, Belgium</p>
+                <hr>
+                <p>
+                    <strong>E:</strong> <a href="#" class="__cf_email__" data-cfemail="">[email&#160;protected]</a>
+                    <br />
+                    <strong>P:</strong> +27 81 419 1630
+                    <br />
+                </p>
+            </div>
+            <div class="col-sm-6 col-md-5 col-md-offset-1">
+                <form class="form-email" data-success="Thanks for your submission, we will be in touch shortly." data-error="Please fill all fields correctly." action="/Home/Contact">
+                    <input type="hidden" name="_token" value="2cfpT0bMRmuLy1sMalciUWa4dQ7oUaHTPriNcnRt">
+                    <input type="text" class="validate-required validate-email" name="email" placeholder="Email Address" />
+                    <textarea class="validate-required" name="message" rows="4" placeholder="Message"></textarea>
+                    <button type="submit">Send Message</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+

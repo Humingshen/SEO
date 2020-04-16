@@ -9,6 +9,11 @@ namespace Hms.Web.Areas.Console.Controllers
     public class DefaultController : Controller
     {
         // GET: Console/Default
+        public ActionResult Home()
+        {
+            return View();
+        }
+        // GET: Console/Default
         public ActionResult Index()
         {
             return View();

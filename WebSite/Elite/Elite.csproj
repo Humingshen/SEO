@@ -195,6 +195,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\assets\config.js" />
     <Content Include="Content\assets\css\login.css" />
     <Content Include="Content\assets\images\bg_login2.png" />
     <Content Include="Content\assets\images\head.png" />
@@ -208,6 +209,7 @@
     <Content Include="Content\assets\js\common.js" />
     <Content Include="Content\assets\libs\echarts\echarts.min.js" />
     <Content Include="Content\assets\libs\echarts\echartsTheme.js" />
+    <Content Include="Content\assets\libs\index.js" />
     <Content Include="Content\assets\libs\layui\css\layui.css" />
     <Content Include="Content\assets\libs\layui\css\modules\laydate\default\laydate.css" />
     <Content Include="Content\assets\libs\layui\css\modules\layer\default\icon.png" />
@@ -228,6 +230,12 @@
     <Content Include="Content\assets\libs\layui\lay\modules\upload.js" />
     <Content Include="Content\assets\libs\layui\lay\modules\util.js" />
     <Content Include="Content\assets\libs\layui\lay\modules\wangEditor.js" />
+    <Content Include="Content\assets\lib\admin.js" />
+    <Content Include="Content\assets\lib\index.js" />
+    <Content Include="Content\assets\lib\view.js" />
+    <Content Include="Content\assets\style\admin.css" />
+    <Content Include="Content\assets\modules\common.js" />
+    <Content Include="Content\assets\modules\console.js" />
     <Content Include="Content\assets\module\admin-a.js" />
     <Content Include="Content\assets\module\admin.css" />
     <Content Include="Content\assets\module\admin.js" />
@@ -250,11 +258,12 @@
     <Content Include="Content\v1\images\07.jpg" />
     <Content Include="Content\v1\images\08.jpg" />
     <Content Include="Content\v1\images\11.jpg" />
+    <Content Include="Content\v1\images\banner-ho.gif" />
     <Content Include="Content\v1\images\bg.jpg" />
     <Content Include="Content\v1\images\logo-dark1.png" />
     <Content Include="Content\v1\images\logo-light1.png" />
     <Content Include="Content\v1\images\微信图片_20200321151332.png" />
-    <Content Include="favicon.ico" />
+    <Content Include="favicon1.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\v1\css\default.css" />
     <Content Include="Content\v1\css\select2.min.css" />
@@ -279,6 +288,7 @@
     <Content Include="Content\v1\js\spectragram.min.js" />
     <Content Include="Content\v1\js\twitterfetcher.min.js" />
     <Content Include="Content\v1\js\ytplayer.min.js" />
+    <Content Include="html\console.html" />
     <Content Include="Persistence\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model1.edmx</DependentUpon>
@@ -343,6 +353,7 @@
     <Content Include="Areas\Console\Views\System\Element.cshtml" />
     <Content Include="Areas\Console\Views\System\Product.cshtml" />
     <Content Include="Areas\Console\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Console\Views\Default\Home.cshtml" />
     <None Include="packages.config" />
     <Content Include="Views\Shared\_Layout_cn.cshtml" />
     <Content Include="Views\Shared\_Layout_en.cshtml" />

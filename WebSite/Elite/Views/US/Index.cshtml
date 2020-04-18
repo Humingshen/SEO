@@ -1,90 +1,149 @@
-﻿
+﻿@using Hms.Web.Persistence;
 @{
-    ViewBag.Title = "Spraying machine | mixing machine | spraying equipment | mixing station equipment";
+    var page = ViewBag.Page as T_Pages;
+
+    ViewBag.Title = page.SeoTitle;
+    ViewBag.Description = page.SeoDescriptions;
+    ViewBag.KeyWords = page.SeoKeyWords;
+
+    List<T_Elements> elements = ViewBag.Elements as List<T_Elements>;
+    elements = elements == null ? new List<T_Elements>() : elements;
+    var news = ViewBag.News as List<T_Article>;
+    //ViewBag.Title = "Spraying machine | mixing machine | spraying equipment | mixing station equipment";
     Layout = "~/Views/Shared/_Layout_en.cshtml";
 }
 
 
 <section class="cover fullscreen image-slider slider-all-controls controls-inside parallax">
     <ul class="slides">
-        <li class="overlay image-bg ">
-            <div class="background-image-holder">
-                <img alt="image" class="background-image" src="" />
-            </div>
-            <div class="container v-align-transform">
-                <div class="row">
-                    <div class="col-sm-10 col-sm-offset-1 text-center">
-                        <h1 class="mb70 mb-xs-16 large">
-                            <br />A Moment to<br />Last Forever
-                        </h1>
-                        <h6 class="uppercase mb16">GLOBAL LEADER IN DIAMOND AUCTION</h6>
-                        <p class="lead mb40">
-                            Extensive network of diamond buyers, sellers, investors
-                        </p>
-                        <a class="btn btn-lg " href="/en-us/about">Learn More</a>
+        @{
+            var banner = elements.Where(i => i.Code == "banner").OrderBy(o => o.SEQ);
+            foreach (var item in banner)
+            {
+                <li class="overlay image-bg ">
+                    <div class="background-image-holder">
+                        <img alt="image" class="background-image" src="@item.Src" />
                     </div>
+                    @Html.Raw(item.HTML)
+                </li>
+            }
+        }
+        @*<li class="overlay image-bg ">
+                <div class="background-image-holder">
+                    <img alt="image" class="background-image" src="" />
+                </div>
+                <div class="container v-align-transform">
+                    <div class="row">
+                        <div class="col-sm-10 col-sm-offset-1 text-center">
+                            <h1 class="mb70 mb-xs-16 large">
+                                <br />A Moment to<br />Last Forever
+                            </h1>
+                            <h6 class="uppercase mb16">GLOBAL LEADER IN DIAMOND AUCTION</h6>
+                            <p class="lead mb40">
+                                Extensive network of diamond buyers, sellers, investors
+                            </p>
+                            <a class="btn btn-lg " href="/en-us/about">Learn More</a>
+                        </div>
+                    </div>
+
                 </div>
 
-            </div>
-
-        </li>
-        <li class="overlay image-bg">
-            <div class="background-image-holder">
-                <img alt="image" class="background-image" src="/images/home-slider2.jpg" />
-            </div>
-            <div class="container v-align-transform">
-                <div class="row">
-                    <div class="col-sm-offset-1 text-center col-sm-10">
-                        <h1 class="mb40 mb-xs-16 large"><br />Innovation Diamond<br />Auction Platform</h1>
-                        <h6 class="uppercase mb16">Bring you closer to diamond investment</h6>
-                        <p class="lead mb40">
-                            Secure, Well trusted platform used by major auction house
-                        </p>
-                        <a class="btn btn-lg btn-white" href="/en-us/about">Learn More</a>
+            </li>
+            <li class="overlay image-bg">
+                <div class="background-image-holder">
+                    <img alt="image" class="background-image" src="/images/home-slider2.jpg" />
+                </div>
+                <div class="container v-align-transform">
+                    <div class="row">
+                        <div class="col-sm-offset-1 text-center col-sm-10">
+                            <h1 class="mb40 mb-xs-16 large"><br />Innovation Diamond<br />Auction Platform</h1>
+                            <h6 class="uppercase mb16">Bring you closer to diamond investment</h6>
+                            <p class="lead mb40">
+                                Secure, Well trusted platform used by major auction house
+                            </p>
+                            <a class="btn btn-lg btn-white" href="/en-us/about">Learn More</a>
+                        </div>
                     </div>
+
                 </div>
 
-            </div>
-
-        </li>
+            </li>*@
     </ul>
 </section>
-<section class="image-edge pt120 pb120 pt-xs-40 pb-xs-40">
-    <div class="row mb80 mb-xs-0">
-        <div class="col-md-8 col-md-offset-2 text-center">
-            <h2>Universal AUCTION SALES</h2>
-            <h4>
-                Global leaders in auctioning diamonds
-            </h4>
-        </div>
-    </div>
-    <div class="col-md-5 col-sm-7 p24 pb0">
-        <h3 class="mb40 mb-xs-16 p24 pb0">Universal had an extensive network of buyers, sellers and investors for Diamonds.</h3>
-        <p class="lead mb10 p24 pb0">
-            One of the fastest growing e-commerce sites in the diamond world, Universal is the world&#039;s leading online marketplace for diamonds.
-        </p>
-        <p class="lead mb10 p24 pb0">
-            Auction houses, galleries and dealers use Universal to deepen relationships with millions of clients around the world, connecting people with the things they love.
-        </p>
-    </div>
-    <div class="col-md-6 col-sm-4 p0">
-        <img alt="Screenshot" class="cast-shadow mb-xs-24" src="img/home1.png">
-    </div>
 
+<section class="image-edge pt120 pb120 pt-xs-40 pb-xs-40">
+    @{
+        var about = elements.Where(i => i.Code == "about").FirstOrDefault();
+        about = about == null ? new T_Elements() : about;
+        @Html.Raw(about.HTML)
+    }
 </section>
 <section class="image-bg bg-dark parallax overlay pt120 pb120">
-    <div class="background-image-holder">
-        <img alt="Background Image" class="background-image" src="/images/diamond-p1.png" />
-    </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-12 text-center">
-                <h2 class="uppercase mb8">Diamond Expertise</h2>
-                <p class="lead mb40">Learn more about Diamonds</p>
-                <a class="btn btn-lg btn-white mb0" href="/en-us/edu/the-4cs">Start Explore</a>
+    @{
+        var introduce = elements.Where(i => i.Code == "introduce").FirstOrDefault();
+        introduce = introduce == null ? new T_Elements() : introduce;
+        @Html.Raw(introduce.HTML)
+    }
+    @*<div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 text-center">
+                    <h1>质量和服务企业生存之本</h1>
+                    <p class="lead mb64">
+                        安立特机械始终将产品质量和服务看作企业的生存之本。从售前的产品咨询、热心服务到售中、售后的技术支持，我们都要求精中求细。强大的设计开发、生产制造、安装调试、技术维修、定期回访，严格的质量保证和快捷到位的售后服务，每一环节都做了精心安排，解决了客户一系列的后顾之忧。
+                    </p>
+                </div>
             </div>
+        </div>*@
+</section>
+
+<section class="pb0 ">
+    @{
+        var service = elements.Where(i => i.Code == "service").FirstOrDefault();
+        service = service == null ? new T_Elements() : service;
+        @Html.Raw(service.HTML)
+    }
+    @*<div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 text-center">
+                    <h1>质量和服务企业生存之本</h1>
+                    <p class="lead mb64">
+                        安立特机械始终将产品质量和服务看作企业的生存之本。从售前的产品咨询、热心服务到售中、售后的技术支持，我们都要求精中求细。强大的设计开发、生产制造、安装调试、技术维修、定期回访，严格的质量保证和快捷到位的售后服务，每一环节都做了精心安排，解决了客户一系列的后顾之忧。
+                    </p>
+                </div>
+            </div>
+        </div>*@
+</section>
+<section style="padding:0px;">
+    <div class="row mb80 mb-xs-0">
+        <div class="col-md-8 col-md-offset-2 text-center">
+            <h2>Industry information</h2>
         </div>
-
     </div>
+    @{
+        foreach (var item in news)
+        {
+            <div class="container">
+                <hr>
+                <div class="row v-align-children margin-bottom-10">
+                    <div class="col-sm-3 text-center">
+                        <img class="cast-shadow" alt="Screenshot" src="@item.Cover">
+                    </div>
+                    <div class="col-sm-9">
+                        <h3 class="uppercase" style="padding-top:10px;">@item.Title</h3>
+                        <h5 class="text-gray-dark">@item.Created.ToString("yyyy-MM-dd")</h5>
+                        <p>@item.SubTitle</p>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</section>
 
+
+<section class="image-bg bg-dark parallax overlay pt120 pb120">
+    @{
+        var more = elements.Where(i => i.Code == "more").FirstOrDefault();
+        more = more == null ? new T_Elements() : more;
+        @Html.Raw(more.HTML)
+    }
 </section>

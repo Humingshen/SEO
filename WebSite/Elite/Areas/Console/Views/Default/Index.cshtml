@@ -58,7 +58,7 @@
                         </dd>
                         <hr>
                         <dd lay-unselect="">
-                            <a ew-event="logout" data-url="/system/login">退出</a>
+                            <a ew-event="logout" data-url="/console/">退出</a>
                         </dd>
                     </dl>
                 </li>
@@ -75,38 +75,106 @@
         <div class="layui-side">
             <div class="layui-side-scroll">
                 <ul class="layui-nav layui-nav-tree arrow2" lay-filter="admin-side-nav" lay-accordion="true" style="margin-top: 15px;">
-                    <li class="layui-nav-item layui-nav-itemed layui-hide">
-                        <a><i class="layui-icon layui-icon-home"></i>&emsp;<cite>Dashboard</cite><span class="layui-nav-more"></span></a>
+                    <li class="layui-nav-item layui-nav-itemed">
+                        <a><i class="layui-icon layui-icon-home"></i>&emsp;<cite>首页</cite><span class="layui-nav-more"></span></a>
                         <dl class="layui-nav-child" style="display: block;">
-                            <dd class="layui-this"><a lay-href="/page/console/console.html">控制台</a></dd>
-                            <dd><a lay-href="/page/console/introduction.html">介绍页</a></dd>
-                            <dd><a lay-href="/page/console/dashboard.html">分析页</a></dd>
-                            <dd><a lay-href="/page/console/welcome.html">欢迎页</a></dd>
+                            <dd class="layui-this"><a lay-href="/console/welcome">控制台</a></dd>
+                            <dd><a lay-href="/console/content/index">分析页</a></dd>
+                            @*<dd><a lay-href="/page/console/introduction.html">介绍页</a></dd>
+        <dd><a lay-href="/page/console/dashboard.html">分析页</a></dd>
+        <dd><a lay-href="/page/console/welcome.html">欢迎页</a></dd>*@
                         </dl>
                     </li>
-                    <li class="layui-nav-item">
-                        <a><i class="layui-icon layui-icon-set"></i>&emsp;<cite>系统管理</cite><span class="layui-nav-more"></span></a>
+                    <li data-name="app" class="layui-nav-item ">
+                        <a href="javascript:;" lay-tips="应用" lay-direction="2">
+                            <i class="layui-icon layui-icon-app"></i>&emsp;
+                            <cite>应用</cite>
+                            <span class="layui-nav-more"></span>
+                        </a>
                         <dl class="layui-nav-child">
-                            <dd><a lay-href="/Console/system/Pages">栏目管理</a></dd>
-                            @*<dd><a lay-href="/system/role">角色管理</a></dd>
-                                <dd><a lay-href="/system/authorities.html">菜单管理</a></dd>
-                                <dd><a lay-href="page/system/loginRecord.html">登录日志</a></dd>*@
+
+                            <dd data-name="content" class="">
+                                <a href="javascript:;">网站系统<span class="layui-nav-more"></span></a>
+                                <dl class="layui-nav-child">
+                                    <dd><a lay-href="/Console/system/dictionary">页面管理</a></dd>
+                                </dl>
+                            </dd>
+                            <dd data-name="product" class="">
+                                <a href="javascript:;">产品系统<span class="layui-nav-more"></span></a>
+                                <dl class="layui-nav-child">
+                                    <dd data-name="list" class=""><a lay-href="/console/product/list">产品列表</a></dd>
+                                    @*<dd data-name="tags"><a lay-href="/console/product/tags">分类管理</a></dd>
+                                    <dd data-name="comment"><a lay-href="/console/product/comment">评论管理</a></dd>*@
+                                </dl>
+                            </dd>
+                            <dd data-name="content" class="">
+                                <a href="javascript:;">内容系统<span class="layui-nav-more"></span></a>
+                                <dl class="layui-nav-child">
+                                    <dd data-name="list" class=""><a lay-href="/console/content/list">文章列表</a></dd>
+                                    @*<dd data-name="tags"><a lay-href="/console/content/tags">分类管理</a></dd>
+                                    <dd data-name="comment"><a lay-href="/console/content/comment">评论管理</a></dd>*@
+                                </dl>
+                            </dd>
+                            <dd data-name="forum" class="">
+                                <a href="javascript:;">社区系统<span class="layui-nav-more"></span></a>
+                                <dl class="layui-nav-child">
+                                    <dd data-name="list" class=""><a lay-href="/console/forum/list">帖子列表</a></dd>
+                                    <dd data-name="replys" class=""><a lay-href="/console/forum/replys">回帖列表</a></dd>
+                                </dl>
+                            </dd>
+                            <dd data-name="rss" class="">
+                                <a href="javascript:;">数据采集<span class="layui-nav-more"></span></a>
+                                <dl class="layui-nav-child">
+                                    <dd data-name="list" class=""><a lay-href="/console/rss/link">资源列表</a></dd>
+                                    <dd data-name="replys" class=""><a lay-href="/console/rss/content">采集内容</a></dd>
+                                </dl>
+                            </dd>
+                            <dd class="">
+                                <a lay-href="/console/message/index">消息中心</a>
+                            </dd>
+                            <dd data-name="workorder" class="">
+                                <a lay-href="/console/workorder/list">工单系统</a>
+                            </dd>
                         </dl>
                     </li>
-                    <li class="layui-nav-item">
-                        <a><i class="layui-icon layui-icon-set"></i>&emsp;<cite>网站管理</cite><span class="layui-nav-more"></span></a>
+                    <li data-name="user" class="layui-nav-item">
+                        <a href="javascript:;" lay-tips="用户" lay-direction="2">
+                            <i class="layui-icon layui-icon-user"></i>&emsp;
+                            <cite>用户</cite>
+                            <span class="layui-nav-more"></span>
+                        </a>
                         <dl class="layui-nav-child">
-                            <dd><a lay-href="/Console/system/element">元素列表</a></dd>
-                            <dd><a lay-href="/Console/system/product">产品列表</a></dd>
-                            <dd><a lay-href="/Console/system/article">内容列表</a></dd>
-                            <dd><a lay-href="/Console/system/comment">留言列表</a></dd>
+                            <dd class="layui-this"><a lay-href="/console/user/list">网站用户</a></dd>
+                            <dd><a lay-href="/console/Administrators/list">后台管理员</a></dd>
                         </dl>
                     </li>
-                    <li class="layui-nav-item">
-                        <a><i class="layui-icon layui-icon-set"></i>&emsp;<cite>信息采集</cite><span class="layui-nav-more"></span></a>
+                    <li data-name="set" class="layui-nav-item">
+                        <a href="javascript:;" lay-tips="设置" lay-direction="2">
+                            <i class="layui-icon layui-icon-set"></i>&emsp;
+                            <cite>设置</cite>
+                            <span class="layui-nav-more"></span>
+                        </a>
                         <dl class="layui-nav-child">
-                            <dd><a lay-href="/Console/rss/link">资源列表</a></dd>
-                            <dd><a lay-href="/Console/rss/content">采集内容</a></dd>
+                            <dd class="">
+                                <a href="javascript:;">系统设置<span class="layui-nav-more"></span></a>
+                                <dl class="layui-nav-child">
+                                    <dd class="layui-this"><a lay-href="/console/system/website">网站设置</a></dd>
+                                    <dd><a lay-href="/console/system/pages">页面管理</a></dd>
+                                    <dd><a lay-href="/Console/system/element">元素列表</a></dd>
+                                    <dd><a lay-href="/console/Administrators/role">角色管理</a></dd>
+                                    <dd><a lay-href="/console/Administrators/authorities">权限管理</a></dd>
+                                    <dd class=""><a lay-href="/console/system/email">邮件服务</a></dd>
+                                    <dd class=""><a lay-href="/console/system/sms">短信服务</a></dd>
+                                    <dd class=""><a lay-href="/console/system/logs">登录日志</a></dd>
+                                </dl>
+                            </dd>
+                            <dd class="">
+                                <a href="javascript:;">我的设置<span class="layui-nav-more"></span></a>
+                                <dl class="layui-nav-child">
+                                    <dd class=""><a lay-href="/console/user/info">基本资料</a></dd>
+                                    <dd><a lay-href="/console/user/password">修改密码</a></dd>
+                                </dl>
+                            </dd>
                         </dl>
                     </li>
                     <li class="layui-nav-item layui-hide">
@@ -231,6 +299,9 @@
                         </dl>
                     </li>
                     <li class="layui-nav-item">
+                        <a lay-href="/"><i class="layui-icon layui-icon-unlink"></i>&emsp;<cite>官方网站</cite></a>
+                    </li>
+                    <li class="layui-nav-item">
                         <a lay-href="//baidu.com"><i class="layui-icon layui-icon-unlink"></i>&emsp;<cite>百度</cite></a>
                     </li>
                 </ul>
@@ -241,7 +312,7 @@
         <div class="layui-body">
             <div class="layui-tab" lay-allowclose="true" lay-filter="admin-pagetabs">
                 <ul class="layui-tab-title">
-                    <li lay-id="page/console/console.html" class="layui-this">
+                    <li lay-id="/console/welcome" class="layui-this">
                         <span class="title"><i class="layui-icon layui-icon-home"></i></span>
                         <i class="layui-icon layui-unselect layui-tab-close">ဆ</i>
                     </li>
@@ -284,45 +355,17 @@
     <!-- js部分 -->
     <script src="~/Content/assets/libs/layui/layui.js?v=315"></script>
     <script src="~/Content/assets/js/common.js?v=315"></script>
+    
     <script>
+        window.onload = function () {
+            if (!this.localStorage.getItem("token")) {
+                window.location.href = "/console/login";
+            }
+        }
         layui.use(['layer', 'index'], function () {
             var $ = layui.jquery;
             var index = layui.index;
             var layer = layui.layer;
-
-            // 默认加载主页
-            index.loadHome({
-                menuPath: 'page/console/console.html',
-                menuName: '<i class="layui-icon layui-icon-home"></i>'
-            });
-
-            var u = 0, p = 0;
-
-            //setInterval(LoadD, 5000);
-            function addVoice() {
-            }
-            function LoadD() {
-                $.ajax({
-                    headers: {
-                        'Authorization': localStorage.getItem("token")
-                    },
-                    type: "POST",
-                    url: "/api//Content/v1/mess",
-                    dataType: "JSON",
-                    data: {},
-                    success: function (res) {
-
-                        if (res.data == u && res.count == p) {
-
-                        } else {
-                            addVoice();
-                            layer.msg('信息变动');
-                        }
-                        u = res.data;
-                        p = res.count;
-                    }
-                });
-            }
         });
     </script>
 

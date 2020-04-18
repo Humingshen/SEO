@@ -1,12 +1,24 @@
-﻿
+﻿@using Hms.Web.Persistence;
 @{
-    ViewBag.Title = "关于我们";
+    var page = ViewBag.Page as T_Pages;
+
+    ViewBag.Title = page.SeoTitle;
+    ViewBag.Description = page.SeoDescriptions;
+    ViewBag.KeyWords = page.SeoKeyWords;
+
+    List<T_Elements> elements = ViewBag.Elements as List<T_Elements>;
+    elements = elements == null ? new List<T_Elements>() : elements;
+    var news = ViewBag.News as List<T_Article>;
+
+    var banner = elements.Where(i => i.Code == "banner").FirstOrDefault();
+    var about = elements.Where(i => i.Code == "about").FirstOrDefault();
+
     Layout = "~/Views/Shared/_Layout_cn.cshtml";
 }
 
 <section class="page-title page-title-1 image-bg overlay parallax">
     <div class="background-image-holder fadeIn">
-        <img alt="Background Image" class="background-image" src="https://hbimg.huabanimg.com/850ece3a0d77f7356c2d5239a66cf16029d3a3ab5ad4d-HLTtrC_fw658">
+        <img alt="关于安立特" class="background-image" src="@(banner==null?"":banner.Src)">
     </div>
     <div class="container">
         <div class="row">
@@ -17,145 +29,147 @@
     </div>
     <ol class="breadcrumb breadcrumb-2">
         <li>
-            <a href="~/zh-cn">主页</a>
+            <a href="/">主页</a>
         </li>
         <li class="active">关于我们</li>
     </ol>
 </section>
-<section>
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-4">
-                <h2 class="number">2010年</h2>
-                <p>
-                    自2010年起在线运营，环球金钻拍卖科技现在运行独一无二的创新拍卖平台，并为其他拍卖行提供技术基础设施。 我们拥有最具竞争力的拍卖费用结构，使我们与其他拍卖行不同。
-                </p>
-            </div>
-            <div class="col-sm-4">
-                <h2 class="number">14000+</h2>
-                <p>
-                    我们每年为我们的竞标者提供超过14000次拍卖，允许安全交易，轻松出价和全面搜索，以确保不会错过任何机会。
-                </p>
-            </div>
-            <div class="col-sm-4">
-                <h2>1350+</h2>
-                <p>
-                    在这样做的过程中，我们支持超过1350位拍卖人的网络，他们审查质量，估算价值并确保每件商品的专业处理。
-                </p>
-            </div>
-        </div>
-    </div>
-</section>
-<hr class="mb0">
-<section>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-3 col-sm-6">
-                <h5 class="uppercase">
-                    <strong>历史</strong>
-                </h5>
-            </div>
-            <div class="col-md-3 col-sm-6 mb64 mb-xs-24">
-                <p class="mb0">
-                    <b>2010年</b>
-                    <br> 成立旨在向钻石专业人士提供高质量，独立的拍卖价格信息
-                </p>
-            </div>
-            <div class="col-md-3 col-sm-6 mb64 mb-xs-24">
-                <p class="mb0">
-                    <b>2012年</b>
-                    <br> 成功发布第一个基于互联网的价格数据库的平台，包括过去10年的市场价格信息
-                </p>
-            </div>
-            <div class="col-md-3 col-sm-6 mb64 mb-xs-24">
-                <p class="mb0">
-                    <b>2013年</b>
-                    <br> 与矿商和生产商建立合作关系，将他们的产品带到国际市场的拍卖行
-                </p>
-            </div>
-            <div class="col-md-3 col-sm-6 mb64 mb-xs-24">
-                <p class="mb0">
-                    <b>2014年</b>
-                    <br> 收购一间顶级科技公司，合并专注于研发在线共享经济技术
-                </p>
-            </div>
-            <div class="col-md-3 col-sm-6 mb64 mb-xs-24">
-                <p class="mb0">
-                    <b>2015年</b>
-                    <br>推出我们第一代在线竞标拍卖平台; 完成了2160万美元的融资
-                </p>
-            </div>
-            <div class="col-md-3 col-sm-6 mb64 mb-xs-24">
-                <p class="mb0">
-                    <b>2016年</b>
-                    <br> 将环球金钻共享科技网页更新为新一代网上平台，旨在鼓励提高在线资源共享，包括增加多种功能例如类别浏览功能。
-                </p>
-            </div>
-            <div class="col-md-3 col-sm-6 mb64 mb-xs-24">
-                <p class="mb0">
-                    <b>2017年</b>
-                    <br>宣布与DE BEERS建立战略合作伙伴关系; 宣布与Mary McCartney建立技术合作关系，Mary McCartney实时拍卖提供支持; 筹集了4000万美元的资金
-                </p>
-            </div>
-            <div class="col-md-3 col-sm-6 mb64 mb-xs-24">
-                <p class="mb0">
-                    <b>2018年</b>
-                    <br> 与Sotheby's开展技术合作，为Soothe.com上的所有在线竞标提供支持
-                </p>
-            </div>
-            <div class="col-md-3 col-sm-6 mb64 mb-xs-24">
-                <p class="mb0">
-                    <b>2019年</b>
-                    <br>Universal有着丰富的卖家、买家、技术团队。一切条件准备充分，正式成立自己的线上拍卖平台
-                </p>
-            </div>
-            <div class="col-md-3 col-sm-6 mb64 mb-xs-24">
-                <p class="mb0">
-                    <b>2020年</b>
-                    <br> 为亚洲投资者创造了环球金钻资源共享平台。
-                </p>
-            </div>
-        </div>
 
-    </div>
-
-</section>
-<hr class="mb0">
-<section>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-3 col-sm-12">
-                <h5 class="uppercase">
-                    <strong>团队</strong>
-                </h5>
-            </div>
-            <div class="col-md-9 col-sm-12 mb40 mb-xs-24 p0">
-                <div class="col-sm-6 mb64 mb-xs-24">
-                    <img alt="Pic" src="~/Content/team/team-5.jpg">
-                </div>
-                <div class="col-sm-6 mb64 mb-xs-24">
-                    <h5 class="uppercase mb0">安德鲁,帕克</h5>
-                    <span class="inline-block mb40 mb-xs-24">首席执行官</span>
+@(Html.Raw(about==null?"":about.HTML))
+@*<section>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4">
+                    <h2 class="number">2010年</h2>
                     <p>
-                        安德鲁,帕克于2012年10月加入环球金钻公司，是一位经验丰富的商业专业人士，在技术领域拥有10年以上的项目管理和团队领导经验。 公认为展示业务发展的自然能力，以及促进战略谈判以促进最佳结果。 他拥有可验证的历史，可以在整个职业生涯中直接促进公司的发展和扩张。此前在过去五年担任环球金钻拍卖科技的运营主管。为公司带来庞大消费者营销和互联网技术经验。  安德鲁帕克领导环球金钻拍卖科技启动及相关的线上拍卖的解决方案。 他在监督公司的财务，运营，销售和新兴市场部门方面发挥了关键作用。 在担任首席执行官的倡议中，安德鲁帕克监督公司注重增强其拍卖平台解决方案，提升其行业领导地位，以及开发创新的拍卖管理平台。 安德鲁帕克在高收入增长公司的企业融资，营销和运营方面拥有数十年的强大背景。
+                        自2010年起在线运营，环球金钻拍卖科技现在运行独一无二的创新拍卖平台，并为其他拍卖行提供技术基础设施。 我们拥有最具竞争力的拍卖费用结构，使我们与其他拍卖行不同。
                     </p>
                 </div>
-            </div>
-            <div class="col-md-9 col-md-push-3 col-sm-12 mb40 mb-xs-24 p0">
-                <div class="col-sm-6 mb64 mb-xs-24">
-                    <img alt="Pic" src="~/Content/team/david-rogers.png">
-                </div>
-                <div class="col-sm-6 mb64 mb-xs-24">
-                    <h5 class="uppercase mb0">大卫罗杰斯</h5>
-                    <span class="inline-block mb40 mb-xs-24">首席营运官</span>
+                <div class="col-sm-4">
+                    <h2 class="number">14000+</h2>
                     <p>
-                        作为投资者关系和企业传播高级副总裁，大卫罗杰斯负责监管环球金钻拍卖科技的所有投资者和沟通事宜，并与其他执行团队，董事会和媒体密切合作。 大卫于2016年6月加入环球金钻拍卖科技，之前在前任公司担任产品和商业投资者及沟通负责人，拥有多年在技术相关事宜和谈判各种商业合同方面的经验。 在环球金钻拍卖科技，大卫的职责包括监督公司治理，并购，许可，产品支持，投资者关系，企业沟通和知识产权事宜
+                        我们每年为我们的竞标者提供超过14000次拍卖，允许安全交易，轻松出价和全面搜索，以确保不会错过任何机会。
+                    </p>
+                </div>
+                <div class="col-sm-4">
+                    <h2>1350+</h2>
+                    <p>
+                        在这样做的过程中，我们支持超过1350位拍卖人的网络，他们审查质量，估算价值并确保每件商品的专业处理。
                     </p>
                 </div>
             </div>
         </div>
+    </section>
+    <hr class="mb0">
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-sm-6">
+                    <h5 class="uppercase">
+                        <strong>历史</strong>
+                    </h5>
+                </div>
+                <div class="col-md-3 col-sm-6 mb64 mb-xs-24">
+                    <p class="mb0">
+                        <b>2010年</b>
+                        <br> 成立旨在向钻石专业人士提供高质量，独立的拍卖价格信息
+                    </p>
+                </div>
+                <div class="col-md-3 col-sm-6 mb64 mb-xs-24">
+                    <p class="mb0">
+                        <b>2012年</b>
+                        <br> 成功发布第一个基于互联网的价格数据库的平台，包括过去10年的市场价格信息
+                    </p>
+                </div>
+                <div class="col-md-3 col-sm-6 mb64 mb-xs-24">
+                    <p class="mb0">
+                        <b>2013年</b>
+                        <br> 与矿商和生产商建立合作关系，将他们的产品带到国际市场的拍卖行
+                    </p>
+                </div>
+                <div class="col-md-3 col-sm-6 mb64 mb-xs-24">
+                    <p class="mb0">
+                        <b>2014年</b>
+                        <br> 收购一间顶级科技公司，合并专注于研发在线共享经济技术
+                    </p>
+                </div>
+                <div class="col-md-3 col-sm-6 mb64 mb-xs-24">
+                    <p class="mb0">
+                        <b>2015年</b>
+                        <br>推出我们第一代在线竞标拍卖平台; 完成了2160万美元的融资
+                    </p>
+                </div>
+                <div class="col-md-3 col-sm-6 mb64 mb-xs-24">
+                    <p class="mb0">
+                        <b>2016年</b>
+                        <br> 将环球金钻共享科技网页更新为新一代网上平台，旨在鼓励提高在线资源共享，包括增加多种功能例如类别浏览功能。
+                    </p>
+                </div>
+                <div class="col-md-3 col-sm-6 mb64 mb-xs-24">
+                    <p class="mb0">
+                        <b>2017年</b>
+                        <br>宣布与DE BEERS建立战略合作伙伴关系; 宣布与Mary McCartney建立技术合作关系，Mary McCartney实时拍卖提供支持; 筹集了4000万美元的资金
+                    </p>
+                </div>
+                <div class="col-md-3 col-sm-6 mb64 mb-xs-24">
+                    <p class="mb0">
+                        <b>2018年</b>
+                        <br> 与Sotheby's开展技术合作，为Soothe.com上的所有在线竞标提供支持
+                    </p>
+                </div>
+                <div class="col-md-3 col-sm-6 mb64 mb-xs-24">
+                    <p class="mb0">
+                        <b>2019年</b>
+                        <br>Universal有着丰富的卖家、买家、技术团队。一切条件准备充分，正式成立自己的线上拍卖平台
+                    </p>
+                </div>
+                <div class="col-md-3 col-sm-6 mb64 mb-xs-24">
+                    <p class="mb0">
+                        <b>2020年</b>
+                        <br> 为亚洲投资者创造了环球金钻资源共享平台。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>*@
+<hr class="mb0">
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <h5 class="uppercase">
+                    <strong>资质</strong>
+                </h5>
+            </div>
+            @{
+                foreach (var item in news)
+                {
+                    <div class="col-md-9 col-md-push-3 col-sm-12 mb40 mb-xs-24 p0">
+                        <div class="col-sm-6 mb64 mb-xs-24">
+                            <img alt="@item.Title" src="@item.Cover">
+                        </div>
+                        <div class="col-sm-6 mb64 mb-xs-24">
+                            <h5 class="uppercase mb0">@item.Title</h5>
+                            <span class="inline-block  mb-xs-24">@item.SubTitle</span>
+                            @(Html.Raw(item.Contents))
+                        </div>
+                    </div>
+                }
+            }
 
+            @*<div class="col-md-9 col-md-push-3 col-sm-12 mb40 mb-xs-24 p0">
+                    <div class="col-sm-6 mb64 mb-xs-24">
+                        <img alt="Pic" src="~/Content/team/david-rogers.png">
+                    </div>
+                    <div class="col-sm-6 mb64 mb-xs-24">
+                        <h5 class="uppercase mb0">大卫罗杰斯</h5>
+                        <span class="inline-block mb40 mb-xs-24">首席营运官</span>
+                        <p>
+                            作为投资者关系和企业传播高级副总裁，大卫罗杰斯负责监管环球金钻拍卖科技的所有投资者和沟通事宜，并与其他执行团队，董事会和媒体密切合作。 大卫于2016年6月加入环球金钻拍卖科技，之前在前任公司担任产品和商业投资者及沟通负责人，拥有多年在技术相关事宜和谈判各种商业合同方面的经验。 在环球金钻拍卖科技，大卫的职责包括监督公司治理，并购，许可，产品支持，投资者关系，企业沟通和知识产权事宜
+                        </p>
+                    </div>
+                </div>*@
+        </div>
     </div>
-
 </section>
 

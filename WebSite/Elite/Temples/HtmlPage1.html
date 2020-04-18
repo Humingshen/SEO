@@ -2,9 +2,57 @@
 <html>
 <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
     <title></title>
+    <script src="../Content/v1/js/jquery.min.js"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
 </head>
 <body>
-    www
+
+    <div id="capture" style="padding: 10px; background: #f5da55">
+        <img id="demo" src="" style="width:300px;" />
+        <h4 style="color: #000; ">Hello world!</h4>
+    </div>
+    <a href="javascript:void(0)" onclick="doScreenShot()">截图</a>
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $.ajax({
+                //请求方式
+                type: "GET",
+                //请求的媒体类型
+                //请求地址
+                url: "http://localhost:3716/Ajax/MobileHandler.ashx?action=img&src=http://cdn.duitang.com/uploads/item/201610/26/20161026123307_Etf8L.jpeg",
+                //数据，json字符串
+                //请求成功
+                success: function (result) {
+                    $("#demo").attr("src", result);
+                },
+                //请求失败，包含具体的错误信息
+                error: function (e) {
+                    console.log(e.status);
+                    console.log(e.responseText);
+                }
+            });
+        });
+
+        function doScreenShot() {
+            html2canvas(document.querySelector("#capture")).then(canvas => {
+                document.body.appendChild(canvas)
+            });
+        }
+        function GetImage(url, imgId) {
+            var xhr = new XMLHttpRequest();
+            xhr.open('get', url, true);
+            xhr.responseType = 'blob';
+            xhr.onload = function () {
+                if (this.status == 200) {
+                    document.getElementById(imgId).src = URL.createObjectURL(this.response);
+                }
+            };
+            xhr.send();
+        };
+    </script>
 </body>
 </html>

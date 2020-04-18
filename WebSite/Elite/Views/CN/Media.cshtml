@@ -1,15 +1,23 @@
-﻿
+﻿@using Hms.Web.Persistence;
 @{
-    ViewBag.Title = "媒体";
+    var page = ViewBag.Page as T_Pages;
+
+    ViewBag.Title = page.SeoTitle;
+    ViewBag.Description = page.SeoDescriptions;
+    ViewBag.KeyWords = page.SeoKeyWords;
+
+    List<T_Elements> elements = ViewBag.Elements as List<T_Elements>;
+    elements = elements == null ? new List<T_Elements>() : elements;
+    var news = ViewBag.News as List<T_Article>;
+
+    var banner = elements.Where(i => i.Code == "banner").FirstOrDefault();
+
     Layout = "~/Views/Shared/_Layout_cn.cshtml";
-    string VideoUrl = "http://Universal.oss-cn-beijing.aliyuncs.com/media/";
 }
-
-
 
 <section class="page-title page-title-1 image-bg overlay parallax">
     <div class="background-image-holder">
-        <img alt="Background Image" class="background-image" src="http://img.lanrentuku.com/img/allimg/1305/5-13050GS109.gif">
+        <img alt="安立特" class="background-image" src="@(banner==null?"":banner.Src)">
     </div>
     <div class="container">
         <div class="row">
@@ -28,344 +36,25 @@
     </ol>
 </section>
 <section class="news-section">
-
-
-
-    <div class="container">
-        <div class="row v-align-children margin-bottom-10">
-            <div class="col-sm-6 text-center">
-                <div class="local-video-container">
-                    <video controls controlsList="nodownload" poster="~media/uap-ceo-sa-speech-poster.jpg">
-                        <source src="@(VideoUrl)uap-ceo-sa-speech.mp4" type="video/mp4">
-                    </video>
+    @{
+        foreach (var item in news)
+        {
+            <div class="container">
+                <div class="row v-align-children margin-bottom-10">
+                    <div class="col-sm-6 text-center">
+                        <div class="local-video-container">
+                            <video controls controlsList="nodownload" poster="@item.Cover">
+                                <source src="@item.Source" type="video/mp4">
+                            </video>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <h3 class="uppercase">@item.Title</h3>
+                    </div>
                 </div>
+                <hr>
             </div>
-            <div class="col-sm-6">
-                <h3 class="uppercase">UAP首席执行官, Tim Cooper, 南非会议致辞</h3>
-            </div>
-        </div>
-        <hr>
-    </div>
-
-
-    <div class="container">
-        <div class="row v-align-children margin-bottom-10">
-            <div class="col-sm-6 text-center">
-                <div class="local-video-container">
-                    <video controls controlsList="nodownload" poster="~media/ceo-speech-sa-poster.jpg">
-                        <source src="@(VideoUrl)ceo-speech-sa.mp4" type="video/mp4">
-                    </video>
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <h3 class="uppercase">环球金钻科技首席执行官，爱德华，诺曼南非会议致辞</h3>
-            </div>
-        </div>
-        <hr>
-    </div>
-
-
-
-
-
-
-    <div class="container">
-        <div class="row v-align-children margin-bottom-10">
-            <div class="col-sm-6 text-center">
-                <div class="local-video-container">
-                    <video controls controlsList="nodownload" poster="~media/SacoChristmas2018-poster.jpg">
-                        <source src="@(VideoUrl)SacoChristmas2018.mp4" type="video/mp4">
-                    </video>
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <h3 class="uppercase">环球金钻科技CEO圣诞致辞</h3>
-            </div>
-        </div>
-        <hr>
-    </div>
-
-
-    <div class="container">
-        <div class="row v-align-children margin-bottom-10">
-            <div class="col-sm-6 text-center">
-                <div class="local-video-container">
-                    <video controls controlsList="nodownload" poster="~media/SCIndiaCEO-poster.jpg">
-                        <source src="@(VideoUrl)SCIndiaCEO.mp4" type="video/mp4">
-                        <source src="~media/SCIndiaCEO.ogv" type="video/ogg">
-                        <source src="~media/SCIndiaCEO.webm" type="video/webm">
-                    </video>
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <h3 class="uppercase">环球金钻科技CEO致辞-印度市场发展方向</h3>
-            </div>
-        </div>
-        <hr>
-    </div>
-    <div class="container">
-        <div class="row v-align-children margin-bottom-10">
-            <div class="col-sm-6 text-center">
-                <div class="local-video-container">
-                    <video controls controlsList="nodownload" poster="~media/SCIndiaSP-poster.jpg">
-                        <source src="@(VideoUrl)SCIndiaSP.mp4" type="video/mp4">
-                        <source src="~media/SCIndiaSP.ogv" type="video/ogg">
-                        <source src="~media/SCIndiaSP.webm" type="video/webm">
-                    </video>
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <h3 class="uppercase">环球金钻科技印度市场总监，SUPREET先生致辞</h3>
-            </div>
-        </div>
-        <hr>
-    </div>
-    <div class="container">
-        <div class="row v-align-children margin-bottom-10">
-            <div class="col-sm-6 text-center">
-                <div class="local-video-container">
-                    <video controls controlsList="nodownload" poster="~media/SCIndiaEv-poster.jpg">
-                        <source src="@(VideoUrl)SCIndiaEv.mp4" type="video/mp4">
-                        <source src="~media/SCIndiaEv.ogv" type="video/ogg">
-                        <source src="~media/SCIndiaEv.webm" type="video/webm">
-                    </video>
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <h3 class="uppercase">印度首次高层会议</h3>
-            </div>
-        </div>
-        <hr>
-    </div>
-
-
-    <div class="container">
-        <div class="row v-align-children margin-bottom-10">
-            <div class="col-sm-6 text-center">
-                <div class="local-video-container">
-                    <video controls controlsList="nodownload" poster="~media/JejuEv-saco-poster.jpg">
-                        <source src="@(VideoUrl)JejuTTC-saco.mp4" type="video/mp4">
-                        <source src="~media/JejuTTC-saco.ogv" type="video/ogg">
-                        <source src="~media/JejuTTC-saco.webm" type="video/webm">
-                    </video>
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <h3 class="uppercase">UAP创始人，蒂姆,库珀，在环球金钻科技济州岛首次公开抽签活动的致辞</h3>
-            </div>
-        </div>
-        <hr>
-    </div>
-
-
-
-
-    <div class="container">
-        <div class="row v-align-children margin-bottom-10">
-            <div class="col-sm-6 text-center">
-                <div class="local-video-container">
-                    <video controls controlsList="nodownload" poster="~media/CEO-Seoul-poster.png">
-                        <source src="@(VideoUrl)CEO-Seoul.mp4" type="video/mp4">
-                        <source src="~media/CEO-Seoul.ogv" type="video/ogg">
-                        <source src="~media/CEO-Seoul.webm" type="video/webm">
-                    </video>
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <h3 class="uppercase">环球金钻科技CEO Block Seoul 2018致辞</h3>
-            </div>
-        </div>
-        <hr>
-    </div>
-
-
-    <div class="container">
-        <div class="row v-align-children margin-bottom-10">
-            <div class="col-sm-6 text-center">
-                <div class="local-video-container">
-                    <video controls controlsList="nodownload" poster="~media/HKSCjzzdh-poster.png">
-                        <source src="@(VideoUrl)HKSCjzzdh.mp4" type="video/mp4">
-                        <source src="~media/HKSCjzzdh.ogv" type="video/ogg">
-                        <source src="~media/HKSCjzzdh.webm" type="video/webm">
-                    </video>
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <h3 class="uppercase">2018年环球金钻科技记者招待会</h3>
-            </div>
-        </div>
-        <hr>
-    </div>
-
-    <div class="container">
-        <div class="row v-align-children margin-bottom-10">
-            <div class="col-sm-6 text-center">
-                <div class="local-video-container">
-                    <video controls controlsList="nodownload" poster="~media/HKSCCEO-poster.png">
-                        <source src="@(VideoUrl)HKSCCEO.mp4" type="video/mp4">
-                        <source src="~media/HKSCCEO.ogv" type="video/ogg">
-                        <source src="~media/HKSCCEO.webm" type="video/webm">
-                    </video>
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <h3 class="uppercase">环球金钻科技2018年发布会CEO致辞</h3>
-            </div>
-        </div>
-        <hr>
-    </div>
-
-    <div class="container">
-        <div class="row v-align-children margin-bottom-10">
-            <div class="col-sm-6 text-center">
-                <div class="local-video-container">
-                    <video controls controlsList="nodownload" poster="~media/HKEvent-poster.png">
-                        <source src="@(VideoUrl)HKEvent.mp4" type="video/mp4">
-                        <source src="~media/HKEvent.ogv" type="video/ogg">
-                        <source src="~media/HKEvent.webm" type="video/webm">
-                    </video>
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <h3 class="uppercase">环球金钻七月份发布会宣传片</h3>
-                <p>环球金钻首席执行官爱德华诺曼先生邀请我们注册环球金钻七月份香港发布会。 会议将有超级巨星，钟丽缇担任七月份独家皇钻系列大使。 请点击视频查看更多详情。</p>
-            </div>
-        </div>
-        <hr>
-    </div>
-
-    <div class="container">
-        <div class="row v-align-children margin-bottom-10">
-            <div class="col-sm-6 text-center">
-                <div class="local-video-container">
-                    <video controls controlsList="nodownload" poster="~media/HKOffice-poster.png">
-                        <source src="@(VideoUrl)HKOffice.mp4" type="video/mp4">
-                        <source src="~media/HKOffice.ogv" type="video/ogg">
-                        <source src="~media/HKOffice.webm" type="video/webm">
-                    </video>
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <h3 class="uppercase">环球金钻香港服务中心</h3>
-                <p>环球金钻首席执行官爱德华诺曼先生介绍了环球金钻香港服务中心。 请点击视频查看更多详情。</p>
-            </div>
-        </div>
-        <hr>
-    </div>
-
-    <div class="container">
-        <div class="row v-align-children margin-bottom-10">
-            <div class="col-sm-6 text-center">
-                <div class="local-video-container">
-                    <video controls controlsList="nodownload" poster="~media/Universal-SZexpo-poster.png">
-                        <source src="@(VideoUrl)Universal-SZexpo.mp4" type="video/mp4">
-                        <source src="~media/Universal-SZexpo.ogv" type="video/ogg">
-                        <source src="~media/Universal-SZexpo.webm" type="video/webm">
-                    </video>
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <h3 class="uppercase">第七届深圳金融商博会，区块链高峰会 2018</h3>
-                <p>5月份，环球金钻首席执行官爱德华诺曼先生在第七届深圳金融商博会，区块链高峰会2018中获得两项大奖。 亚洲最佳区块链技术和最具创新性的钻石交易平台。 请点击视频查看更多内容。</p>
-            </div>
-        </div>
-        <hr>
-    </div>
-
-    <div class="container">
-        <div class="row v-align-children margin-bottom-10">
-            <div class="col-sm-6 text-center">
-                <div class="local-video-container">
-                    <video controls controlsList="nodownload" poster="~media/ceo-interview-poster.png">
-                        <source src="@(VideoUrl)ceo-interview.mp4" type="video/mp4">
-                        <source src="~media/ceo-interview.ogv" type="video/ogg">
-                        <source src="~media/ceo-interview.webm" type="video/webm">
-                    </video>
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <h3 class="uppercase">首席执行官爱德华诺曼先生访谈</h3>
-                <p>环球金钻首席执行官爱德华诺曼先生对创新的钻石交易平台以及环球金钻在亚洲地区的未来将实现的目标提供见解。 请点击视频查看更多内容。</p>
-            </div>
-        </div>
-        <hr>
-    </div>
-
-    <div class="container">
-        <div class="row v-align-children margin-bottom-10">
-            <div class="col-sm-6 text-center">
-                <div class="local-video-container">
-                    <video controls controlsList="nodownload" poster="~media/CEOmarket-poster.png">
-                        <source src="@(VideoUrl)CEOmarket.mp4" type="video/mp4">
-                        <source src="~media/CEOmarket.ogv" type="video/ogg">
-                        <source src="~media/CEOmarket.webm" type="video/webm">
-                    </video>
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <h3 class="uppercase">首席执行官爱德华诺曼先生解释钻石市场的伟大未来</h3>
-                <p>环球金钻首席执行官爱德华诺曼先生跟大家解释钻石市场的伟大未来以及环球金钻在亚洲地区的未来将实现的目标提供见解。 请点击视频查看更多内容。</p>
-            </div>
-        </div>
-        <hr>
-    </div>
-
-    <div class="container">
-        <div class="row v-align-children margin-bottom-10">
-            <div class="col-sm-6 text-center">
-                <div class="local-video-container">
-                    <video controls controlsList="nodownload" poster="~media/Saco5C-poster.png">
-                        <source src="@(VideoUrl)Saco5C.mp4" type="video/mp4">
-                        <source src="~media/Saco5C.ogv" type="video/ogg">
-                        <source src="~media/Saco5C.webm" type="video/webm">
-                    </video>
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <h3 class="uppercase">环球金钻钻石专家</h3>
-                <p>环球金钻钻石专家为大家解释钻石的5C标准钻以及整个钻石市场的简介。 请点击视频查看更多内容。</p>
-            </div>
-        </div>
-        <hr>
-    </div>
-
-    <div class="container">
-        <div class="row v-align-children margin-bottom-10">
-            <div class="col-sm-6 text-center">
-                <div class="local-video-container">
-                    <video controls controlsList="nodownload" poster="~media/Universal-product-poster.png">
-                        <source src="@(VideoUrl)Universal-product.mp4" type="video/mp4">
-                        <source src="~media/Universal-product.ogv" type="video/ogg">
-                        <source src="~media/Universal-product.webm" type="video/webm">
-                    </video>
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <h3 class="uppercase">环球金钻科技创新共享平台</h3>
-                <p>让我们认识环球金钻科技创新共享平台！一起跟着环球金钻科技共拍，共赢，共富吧！</p>
-            </div>
-        </div>
-        <hr>
-    </div>
-
-    <div class="container">
-        <div class="row v-align-children margin-bottom-10">
-            <div class="col-sm-6 text-center">
-                <div class="local-video-container">
-                    <video controls controlsList="nodownload" poster="~media/Universal-corporate-poster.png">
-                        <source src="@(VideoUrl)Universal-corporate.mp4" type="video/mp4">
-                        <source src="~media/Universal-corporate.ogv" type="video/ogg">
-                        <source src="~media/Universal-corporate.webm" type="video/webm">
-                    </video>
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <h3 class="uppercase">环球金钻科技创企业视频</h3>
-                <p>让我们认识环球金钻科技是怎么一起发起这新颖的共拍模式！</p>
-            </div>
-        </div>
-        <hr>
-    </div>
-
+        }
+    }
 </section>
 

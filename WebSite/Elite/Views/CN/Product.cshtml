@@ -1,12 +1,25 @@
-﻿
+﻿@using Hms.Web.Persistence;
 @{
-    ViewBag.Title = "产品系列";
+    var page = ViewBag.Page as T_Pages;
+
+    ViewBag.Title = page.SeoTitle;
+    ViewBag.Description = page.SeoDescriptions;
+    ViewBag.KeyWords = page.SeoKeyWords;
+
+    List<T_Elements> elements = ViewBag.Elements as List<T_Elements>;
+    elements = elements == null ? new List<T_Elements>() : elements;
+    var news = ViewBag.News as List<T_Article>;
+
+    var banner = elements.Where(i => i.Code == "banner").FirstOrDefault();
+    var about = elements.Where(i => i.Code == "introduce").FirstOrDefault();
+
     Layout = "~/Views/Shared/_Layout_cn.cshtml";
 }
 
+
 <section class="page-title page-title-1 image-bg overlay parallax">
     <div class="background-image-holder fadeIn">
-        <img alt="Background Image" class="background-image" src="https://hbimg.huabanimg.com/06289ca174c7c7cb738c8c336df2097a6ac7a67d53d66-7WXDXN_fw658">
+        <img alt="安立特-产品系列" class="background-image" src="@(banner==null?"":banner.Src)">
     </div>
     <div class="container">
         <div class="row">
@@ -27,26 +40,34 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 text-center">
-                <h3>种类和规格<br>向全球客户承诺高品质钻石</h3>
-                <p class="lead mb80">我们提供多种钻石原石产品的销售，包括特殊和特级钻、用于奢侈品零售的高品质产品、用于主流零售的中端市场产品以及用于大众市场和工业使用的低质量产品。<br><br>我们的产品既迎合了特殊客户群的需求，也满足了大众的需求。我们确保钻石原石的颜色、质量、尺寸和产品参数完全满足客户的抛光需求，不断完善原石产品的参数以满足低端市场的需求。我们的产品,根据钻石原石的用途,主要分为以下类别:</p>
+                @(Html.Raw(about==null?"":about.HTML))
             </div>
         </div>
 
     </div>
 
 </section>
-<section class="image-square left">
-    <div class="col-md-6 image">
-        <div class="background-image-holder fadeIn">
-            <img alt="image" class="background-image" src="http://www.xtfengguang.com/Upload/news/7123E2AE7D94E4B649E20CE61484EC84.jpg">
-        </div>
-    </div>
-    <div class="col-md-6 col-md-offset-1 content">
-        <h3>特殊和特级</h3>
-        <p class="mb0">这类钻石原石通常用于制作大颗粒(+5CT及以上）或各种颜色的抛光钻石。这种高端材料通常用于制造超豪华奢侈品。</p>
-    </div>
-</section>
-<section class="image-square right">
+@{
+    for (int i = 0; i < news.Count; i++)
+    {
+        <section class="image-square @(i%2==0?"left":"right")">
+            <div class="col-md-6 image">
+                <a href="@news[i].Source" target="_blank">
+                    <div class="background-image-holder fadeIn">
+                        <img alt="image" class="background-image" src="@news[i].Cover">
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-6 col-md-offset-1 content">
+                <h3>@news[i].Title</h3>
+                <p class="mb0">@news[i].SubTitle</p>
+                @Html.Raw(news[i].Contents)
+            </div>
+        </section>
+    }
+}
+
+@*<section class="image-square right">
     <div class="col-md-6 image">
         <div class="background-image-holder fadeIn">
             <img alt="image" class="background-image" src="http://www.xtfengguang.com/Upload/news/7123E2AE7D94E4B649E20CE61484EC84.jpg">
@@ -78,5 +99,5 @@
         <h3>低端市场</h3>
         <p class="mb0">这类钻石原石通常用于制作质量为SI到I级的各种颜色抛 光钻石。需要经过多道加工工序,通常用于时尚和大宗市场零售。</p>
     </div>
-</section>
+</section>*@
 

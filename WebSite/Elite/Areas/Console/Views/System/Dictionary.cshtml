@@ -1,0 +1,520 @@
+﻿
+@{
+    ViewBag.Title = "Dictionary";
+    Layout = "~/Areas/Console/Views/Shared/_PageLayout.cshtml";
+}
+
+<!-- 页面加载loading -->
+<div class="page-loading" style="display:none">
+    <div class="ball-loader">
+        <span></span><span></span><span></span><span></span>
+    </div>
+</div>
+<!-- 正文开始 -->
+<div class="layui-fluid" style="padding-bottom: 0;">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md3">
+            <div class="layui-card">
+                <div class="layui-card-body" style="padding: 10px;">
+                    <!-- 表格工具栏1 -->
+                    <form class="layui-form toolbar">
+                        <div class="layui-form-item">
+                            <div class="layui-inline" style="max-width: 160px;">
+                                <input name="dictName" class="layui-input" placeholder="输入页面名称" />
+                            </div>
+                            <div class="layui-inline">
+                                <button class="layui-btn icon-btn" lay-filter="dictTbSearch" lay-submit>
+                                    <i class="layui-icon">&#xe615;</i>搜索
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- 数据表格1 -->
+                    <table id="dictTable" lay-filter="dictTable"></table>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md9">
+            <div class="layui-card">
+                <div class="layui-card-body" style="padding: 10px;">
+                    <!-- 表格工具栏2 -->
+                    <form class="layui-form toolbar">
+                        <div class="layui-form-item">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">元素名称:</label>
+                                <div class="layui-input-inline">
+                                    <input name="dictDataName" class="layui-input" placeholder="输入元素名称" />
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">元素键值:</label>
+                                <div class="layui-input-inline">
+                                    <input name="dictDataCode" class="layui-input" placeholder="输入元素键值" />
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                &emsp;
+                                <button class="layui-btn icon-btn" lay-filter="dictDataTbSearch" lay-submit>
+                                    <i class="layui-icon">&#xe615;</i>搜索
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- 数据表格2 -->
+                    <table id="dictDataTable" lay-filter="dictDataTable"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 表单弹窗1 -->
+<script type="text/html" id="dictEditDialog">
+    <form id="dictEditForm" lay-filter="dictEditForm" class="layui-form model-form">
+        <input name="id" type="hidden" />
+        <div class="layui-form-item">
+            <label class="layui-form-label">版本:</label>
+            <div class="layui-input-inline">
+                <select name="version" lay-verify="required" required>
+                    <option value="">选择版本</option>
+                    <option value="zh-CN">中文</option>
+                    <option value="en-US">English</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label layui-form-required">页面名称:</label>
+            <div class="layui-input-block">
+                <input name="pageTitle" placeholder="请输入页面名称" class="layui-input"
+                       lay-verType="tips" lay-verify="required" required />
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label layui-form-required">页面代码:</label>
+            <div class="layui-input-block">
+                <input name="code" placeholder="请输入页面键值" class="layui-input"
+                       lay-verType="tips" lay-verify="required" required />
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label layui-form-required">排序号:</label>
+            <div class="layui-input-block">
+                <input name="seq" placeholder="请输入排序号" class="layui-input" type="number"
+                       lay-verType="tips" lay-verify="required" required />
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label layui-form-required">SEO标题:</label>
+            <div class="layui-input-block">
+                <input name="seoTitle" placeholder="请输入SEO标题" class="layui-input"
+                       lay-verType="tips" lay-verify="required" required />
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label layui-form-required">关键词:</label>
+            <div class="layui-input-block">
+                <input name="seoKeyWords" placeholder="请输入SEO关键词" class="layui-input"
+                       lay-verType="tips" lay-verify="required" required />
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">SEO描述:</label>
+            <div class="layui-input-block">
+                <textarea name="seoDescriptions" placeholder="请输入描述" class="layui-textarea"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item text-right">
+            <button class="layui-btn" lay-filter="dictEditSubmit" lay-submit>保存</button>
+            <button class="layui-btn layui-btn-primary" type="button" ew-event="closeDialog">取消</button>
+        </div>
+    </form>
+</script>
+<!-- 表格操作列 -->
+<script type="text/html" id="dictDataTbBar">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+<!-- 表单弹窗 -->
+<script type="text/html" id="dictDataEditDialog">
+    <form id="dictDataEditForm" lay-filter="dictDataEditForm" class="layui-form model-form" style="padding-left: 10px;">
+        <input name="id" type="hidden" />
+        <div class="layui-form-item">
+            <label class="layui-form-label">页面:</label>
+            <div class="layui-input-inline">
+                <select id="page" name="pageId" lay-verify="required" required>
+                    <option value="">选择页面</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label layui-form-required" style="padding-left: 0;width: 95px;">元素名称:</label>
+            <div class="layui-input-block">
+                <input name="title" placeholder="请输入元素名称" class="layui-input"
+                       lay-verType="tips" lay-verify="required" required />
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label layui-form-required" style="padding-left: 0;width: 95px;">元素代码:</label>
+            <div class="layui-input-block">
+                <input name="code" placeholder="请输入元素键值" class="layui-input"
+                       lay-verType="tips" lay-verify="required" required />
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label layui-form-required">排序号:</label>
+            <div class="layui-input-block">
+                <input name="seq" placeholder="请输入排序号" class="layui-input" type="number"
+                       lay-verType="tips" lay-verify="required" required />
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label layui-form-required" style="padding-left: 0;width: 95px;">地址:</label>
+            <div class="layui-input-block">
+                <input name="src" placeholder="请输入资源地址" class="layui-input"
+                       lay-verType="tips" lay-verify="required" required />
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label layui-form-required" style="padding-left: 0;width: 95px;">链接:</label>
+            <div class="layui-input-block">
+                <input name="url" placeholder="请输入链接" class="layui-input"
+                       lay-verType="tips" lay-verify="required" required />
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">内容:</label>
+            <div class="layui-input-block">
+                <textarea name="html" id="demoEditor" lay-verify="content" class="layui-input"></textarea>
+                @*<textarea placeholder="请输入内容" class="layui-textarea"></textarea>*@
+            </div>
+        </div>
+        <div class="layui-form-item text-right">
+            <button class="layui-btn" lay-filter="dictDataEditSubmit" lay-submit>保存</button>
+            <button class="layui-btn layui-btn-primary" type="button" ew-event="closeDialog">取消</button>
+        </div>
+    </form>
+</script>
+
+<!-- 表格状态列 -->
+<script type="text/html" id="userTbState">
+    <input type="checkbox" lay-filter="userTbStateCk" value="{{d.id}}" lay-skin="switch"
+           lay-text="正常|锁定" {{d.enable?'checked':''}} style="display: none;" />
+    <p style="display: none;">{{d.enable?'正常':'锁定'}}</p>
+</script>
+<!-- js部分 -->
+@section scripts{
+    <script src="~/Content/assets/libs/tinymce/tinymce.min.js"></script>
+    <script>
+        layui.use(['layer', 'form', 'table', 'util', 'admin'], function () {
+            var $ = layui.jquery;
+            var layer = layui.layer;
+            var form = layui.form;
+            var table = layui.table;
+            var util = layui.util;
+            var admin = layui.admin;
+            var selObj;  // 左表选中数据
+
+            /* 渲染表格 */
+            var insTb = table.render({
+                elem: '#dictTable',
+                url: '/api/page',
+                height: 'full-100',
+                toolbar: ['<p>',
+                    '<button lay-event="add" class="layui-btn layui-btn-sm icon-btn"><i class="layui-icon">&#xe654;</i>添加</button>&nbsp;',
+                    '<button lay-event="edit" class="layui-btn layui-btn-sm layui-btn-warm icon-btn"><i class="layui-icon">&#xe642;</i>修改</button>&nbsp;',
+                    '<button lay-event="del" class="layui-btn layui-btn-sm layui-btn-danger icon-btn"><i class="layui-icon">&#xe640;</i>删除</button>',
+                    '</p>'].join(''),
+                defaultToolbar: [],
+                cols: [[
+                    { type: 'numbers' },
+                    { field: 'id', title: '标识' },
+                    { field: 'pageTitle', title: '页面名称' },
+                    { field: 'seq', title: 'SEQ', sort: true, align: 'center', width: 80, minWidth: 80 },
+                    { field: 'version', title: '版本' }
+                ]],
+                done: function (res, curr, count) {
+                    $('#dictTable+.layui-table-view .layui-table-body tbody>tr:first').trigger('click');
+                }
+            });
+
+
+
+            /* 表格搜索 */
+            form.on('submit(dictTbSearch)', function (data) {
+                insTb.reload({ where: data.field });
+                return false;
+            });
+
+            /* 表格头工具栏点击事件 */
+            table.on('toolbar(dictTable)', function (obj) {
+                if (obj.event === 'add') { // 添加
+                    showEditModel();
+                } else if (obj.event === 'edit') { // 修改
+                    showEditModel(selObj.data, selObj);
+                } else if (obj.event === 'del') { // 删除
+                    doDel(selObj);
+                }
+            });
+
+            /* 监听行单击事件 */
+            table.on('row(dictTable)', function (obj) {
+                selObj = obj;
+                obj.tr.addClass('layui-table-click').siblings().removeClass('layui-table-click');
+                insTb2.reload({ where: { pageId: obj.data.id }, url: '/api/Element/List' });
+            });
+
+            function Pages(id) {
+                $.ajax({
+                    type: 'GET',
+                    url: '/api/page',
+                    success: function (res) {
+                        $("#page").html('<option value="">选择页面</option>');
+                        $.each(res.data, function (index, item) {
+                            var option1 = $("<option>").val(item.id).text(item.pageTitle);
+                            //通过LayUI.jQuery添加列表项
+                            $("#page").append(option1);
+                            $('#page').val(id);
+                        });
+                        form.render();
+                    }
+                });
+            }
+            /* 显示表单弹窗 */
+            function showEditModel(mData, obj) {
+                admin.open({
+                    type: 1,
+                    area: '620px',
+                    title: (mData ? '修改' : '添加') + '页面',
+                    content: $('#dictEditDialog').html(),
+                    success: function (layero, dIndex) {
+                        // 回显表单数据
+                        form.val('dictEditForm', mData);
+                        // 表单提交事件
+                        form.on('submit(dictEditSubmit)', function (data) {
+                            var loadIndex = layer.load(2);
+                            $.ajax({
+                                headers: {
+                                    'Authorization': localStorage.getItem("token")
+                                },
+                                method: 'POST',
+                                data: data.field,
+                                url: '/api/page',
+                                type: "JSON",
+                                success: function (res) {
+                                    layer.close(loadIndex);
+                                    if (200 === res.code) {
+                                        layer.close(dIndex);
+                                        layer.msg(res.msg, { icon: 1 });
+                                        if (obj) {
+                                            obj.update(data.field);
+                                        } else {
+                                            insTb.reload();
+                                        }
+                                    } else {
+                                        layer.msg(res.msg, { icon: 2 });
+                                    }
+                                }
+                            });
+                            return false;
+                        });
+                    }
+                });
+            }
+
+            /* 删除 */
+            function doDel(obj) {
+                layer.confirm('确定要删除此字典吗？', {
+                    skin: 'layui-layer-admin',
+                    shade: .1
+                }, function (i) {
+                    layer.close(i);
+                    var loadIndex = layer.load(2);
+                    $.ajax({
+                        headers: {
+                            'Authorization': localStorage.getItem("token")
+                        },
+                        method: 'POST',
+                        data: { id: obj.data.id },
+                        url: '/api/page/delete',
+                        type: "JSON",
+                        success: function (res) {
+                            layer.close(loadIndex);
+                            if (200 === res.code) {
+                                layer.msg(res.msg, { icon: 1 });
+                                obj.del();
+                                $('#dictTable+.layui-table-view .layui-table-body tbody>tr:first').trigger('click');
+                            } else {
+                                layer.msg(res.msg, { icon: 2 });
+                            }
+                        }
+                    });
+                });
+            }
+
+            /* 渲染表格2 */
+            var insTb2 = table.render({
+                elem: '#dictDataTable',
+                data: [],
+                height: 'full-100',
+                page: false,
+                toolbar: ['<p>',
+                    '<button lay-event="add" class="layui-btn layui-btn-sm icon-btn"><i class="layui-icon">&#xe654;</i>添加</button>&nbsp;',
+                    '<button lay-event="del" class="layui-btn layui-btn-sm layui-btn-danger icon-btn"><i class="layui-icon">&#xe640;</i>删除</button>&nbsp;',
+                    '</p>'].join(''),
+                cellMinWidth: 100,
+                cols: [[
+                    { type: 'checkbox' },
+                    { type: 'numbers' },
+                    { field: 'title', title: '元素名称', sort: true },
+                    { field: 'code', title: '元素代码', sort: true },
+                    { field: 'seq', title: '排序号', sort: true, align: 'center', width: 90, minWidth: 90 },
+                    { field: 'src', title: '资源' },
+                    { field: 'url', title: '链接' },
+                    { field: 'enable', title: '状态', templet: '#userTbState', sort: true, width: 100 },
+                    { title: '操作', toolbar: '#dictDataTbBar', align: 'center', width: 120, minWidth: 120 }
+                ]]
+            });
+
+            /* 表格2搜索 */
+            form.on('submit(dictDataTbSearch)', function (data) {
+                insTb2.reload({ where: data.field, page: { curr: 1 } });
+                return false;
+            });
+
+            /* 表格2工具条点击事件 */
+            table.on('tool(dictDataTable)', function (obj) {
+                if (obj.event === 'edit') { // 修改
+                    showEditModel2(obj.data);
+                } else if (obj.event === 'del') { // 删除
+                    doDel2(obj);
+                }
+            });
+
+            /* 表格2头工具栏点击事件 */
+            table.on('toolbar(dictDataTable)', function (obj) {
+                if (obj.event === 'add') { // 添加
+                    showEditModel2();
+                } else if (obj.event === 'del') { // 删除
+                    var checkRows = table.checkStatus('dictDataTable');
+                    if (checkRows.data.length === 0) {
+                        layer.msg('请选择要删除的数据', { icon: 2 });
+                        return;
+                    }
+                    var ids = checkRows.data.map(function (d) {
+                        return d.dictDataId;
+                    });
+                    doDel2({ ids: ids });
+                }
+            });
+
+            /* 显示表单弹窗2 */
+            function showEditModel2(mData) {
+                admin.open({
+                    type: 1,
+                    area: '820px',
+                    offset: '15px',
+                    title: (mData ? '修改' : '添加') + '元素',
+                    content: $('#dictDataEditDialog').html(),
+                    success: function (layero, dIndex) {
+
+                        Pages(mData ? mData.pageId : '');
+                        // 回显表单数据
+                        form.val('dictDataEditForm', mData);
+                        // 渲染富文本编辑器
+                        tinymce.init({
+                            selector: '#demoEditor',
+                            height: 325,
+                            branding: true,
+                            language: 'zh_CN',
+                            plugins: 'code print preview fullscreen paste searchreplace save autosave link autolink image imagetools media table codesample lists advlist hr charmap emoticons anchor directionality pagebreak quickbars nonbreaking visualblocks visualchars wordcount',
+                            toolbar: 'fullscreen preview code | undo redo | forecolor backcolor | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullist | formatselect fontselect fontsizeselect | link image media emoticons charmap anchor pagebreak codesample | ltr rtl',
+                            toolbar_drawer: 'sliding',
+                            images_upload_url: '../../../json/tinymce-upload-ok.json',
+                            file_picker_types: 'media',
+                            file_picker_callback: function (callback, value, meta) {
+                                layer.msg('演示环境不允许上传', { anim: 6 });
+                            }
+                        });
+
+                        // 表单提交事件
+                        form.on('submit(dictDataEditSubmit)', function (data) {
+                            var loadIndex = layer.load(2);
+                            data.field.html = tinymce.get('demoEditor').getContent();
+                            $.ajax({
+                                headers: {
+                                    'Authorization': localStorage.getItem("token")
+                                },
+                                method: 'POST',
+                                data: data.field,
+                                url: '/api/Element',
+                                type: "JSON",
+                                success: function (res) {
+                                    layer.close(loadIndex);
+                                    if (200 === res.code) {
+                                        layer.close(dIndex);
+                                        layer.msg(res.msg, { icon: 1 });
+                                        insTb2.reload({ page: { curr: 1 } });
+                                    } else {
+                                        layer.msg(res.msg, { icon: 2 });
+                                    }
+                                }
+                            });
+                            return false;
+                        });
+                    },
+                    end: function () {
+                        tinymce.get('demoEditor').destroy(false);
+                    }
+                });
+            }
+
+            /* 删除2 */
+            function doDel2(obj) {
+                layer.confirm('确定要删除选中数据吗？', {
+                    skin: 'layui-layer-admin',
+                    shade: .1
+                }, function (i) {
+                    layer.close(i);
+                    var loadIndex = layer.load(2);
+                    $.get('/content/json/ok.json', {
+                        id: obj.data ? obj.data.dictDataId : '',
+                        ids: obj.ids ? obj.ids.join(',') : ''
+                    }, function (res) {
+                        layer.close(loadIndex);
+                        if (200 === res.code) {
+                            layer.msg(res.msg, { icon: 1 });
+                            insTb2.reload({ page: { curr: 1 } });
+                        } else {
+                            layer.msg(res.msg, { icon: 2 });
+                        }
+                    }, 'json');
+                });
+            }
+
+            /* 修改用户状态 */
+            form.on('switch(userTbStateCk)', function (obj) {
+                var loadIndex = layer.load(2);
+                $.get('/api/Element/StateCk', {
+                    id: obj.elem.value
+                }, function (res) {
+                    layer.close(loadIndex);
+                    if (res.code === 200) {
+                        layer.msg(res.msg, { icon: 1 });
+                    } else {
+                        layer.msg(res.msg, { icon: 2 });
+                        $(obj.elem).prop('checked', !obj.elem.checked);
+                        form.render('checkbox');
+                    }
+                }, 'json');
+            });
+        });
+    </script>
+
+}
+
+
+<style>
+    body .tox-tinymce-aux {
+        z-index: 19892000;
+    }
+</style>

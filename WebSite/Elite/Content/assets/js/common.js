@@ -5,6 +5,7 @@ layui.config({
     version: '315',
     base: getProjectUrl() + 'assets/module/'
 }).extend({
+    steps: 'steps/steps',
     formSelects: 'formSelects/formSelects-v4',
     treetable: 'treetable-lay/treetable',
     dropdown: 'dropdown/dropdown',
@@ -17,8 +18,8 @@ layui.config({
     zTree: 'zTree/zTree',
     introJs: 'introJs/introJs',
     fileChoose: 'fileChoose/fileChoose',
+    treeTable: 'treeTable/treeTable',
     tagsInput: 'tagsInput/tagsInput',
-    Drag: 'Drag/Drag',
     CKEDITOR: 'ckeditor/ckeditor',
     Split: 'Split/Split',
     cascader: 'cascader/cascader'

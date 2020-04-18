@@ -1,130 +1,156 @@
-﻿
+﻿@using Hms.Web.Persistence;
 @{
-    ViewBag.Title = "喷涂机|混浆机|喷涂设备|搅拌站设备";
+    var page = ViewBag.Page as T_Pages;
+
+    ViewBag.Title = page.SeoTitle;
+    ViewBag.Description = page.SeoDescriptions;
+    ViewBag.KeyWords = page.SeoKeyWords;
+
+    List<T_Elements> elements = ViewBag.Elements as List<T_Elements>;
+    elements = elements == null ? new List<T_Elements>() : elements;
+    var news = ViewBag.News as List<T_Article>;
+
     Layout = "~/Views/Shared/_Layout_cn.cshtml";
 }
 <section class="cover fullscreen image-slider slider-all-controls controls-inside parallax">
     <ul class="slides">
-        <li class="overlay image-bg ">
-            <div class="background-image-holder">
-                <img alt="image" class="background-image" src="~/Content/v1/images/02.jpg" />
-            </div>
-            <div class="container v-align-transform">
-                <div class="row">
-                    <div class="col-sm-10 col-sm-offset-1 text-center">
-                        <h1 class="mb70 mb-xs-16 large" style="padding-top:20px;">
-                            诚信为本，追求卓越
-                        </h1>
-                        <h6 class="uppercase mb16">全球砂浆施工设备领导品牌</h6>
-                        <p class="lead mb40">
-                            自主研发，拥有多项国家专利及注册商标。
-                        </p>
-                        <a class="btn btn-lg " href="/products">了解详情</a>
+        @{
+            var banner = elements.Where(i => i.Code == "banner").OrderBy(o => o.SEQ);
+            foreach (var item in banner)
+            {
+                <li class="overlay image-bg ">
+                    <div class="background-image-holder">
+                        <img alt="image" class="background-image" src="@item.Src" />
+                    </div>
+                    @Html.Raw(item.HTML)
+                </li>
+            }
+        }
+        @*<li class="overlay image-bg ">
+                <div class="background-image-holder">
+                    <img alt="image" class="background-image" src="~/Content/v1/images/02.jpg" />
+                </div>
+                <div class="container v-align-transform">
+                    <div class="row">
+                        <div class="col-sm-10 col-sm-offset-1 text-center">
+                            <h1 class="mb70 mb-xs-16 large" style="padding-top:20px;">
+                                诚信为本，追求卓越
+                            </h1>
+                            <h6 class="uppercase mb16">全球砂浆施工设备领导品牌</h6>
+                            <p class="lead mb40">
+                                自主研发，拥有多项国家专利及注册商标。
+                            </p>
+                            <a class="btn btn-lg " href="/products">了解详情</a>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="overlay image-bg">
+                <div class="background-image-holder">
+                    <img alt="image" class="background-image" src="~/Content/v1/images/banner-ho.gif" />
+                </div>
+                <div class="container v-align-transform">
+                    <div class="row">
+                        <div class="col-sm-offset-1 text-center col-sm-10">
+                            <h1 class="mb40 mb-xs-16 large" style="padding-top:20px;"> 严格的质量保证<br /></h1>
+                            <h6 class="uppercase mb16">做到真正的无后顾之忧</h6>
+                            <p class="lead mb40">
+                                执行ISO9001质量体系认证
+                            </p>
+                            <a class="btn btn-lg btn-white" href="/about">了解详情</a>
+                        </div>
                     </div>
                 </div>
 
-            </div>
-        </li>
-        <li class="overlay image-bg">
-            <div class="background-image-holder">
-                <img alt="image" class="background-image" src="~/Content/v1/images/banner-ho.gif" />
-            </div>
-            <div class="container v-align-transform">
-                <div class="row">
-                    <div class="col-sm-offset-1 text-center col-sm-10">
-                        <h1 class="mb40 mb-xs-16 large" style="padding-top:20px;"> 严格的质量保证<br /></h1>
-                        <h6 class="uppercase mb16">做到真正的无后顾之忧</h6>
-                        <p class="lead mb40">
-                            执行ISO9001质量体系认证
-                        </p>
-                        <a class="btn btn-lg btn-white" href="/about">了解详情</a>
-                    </div>
-                </div>
-
-            </div>
-
-        </li>
-        
+            </li>*@
     </ul>
 </section>
 <section class="image-edge pt120 pb120 pt-xs-40 pb-xs-40">
-    <div class="row mb80 mb-xs-0">
-        <div class="col-md-8 col-md-offset-2 text-center">
-            <h2>安立特机械设备有限公司</h2>
-            <h4>
-                国际砂浆施工设备·领导品牌
-            </h4>
+    @{
+        var about = elements.Where(i => i.Code == "about").FirstOrDefault();
+        about = about == null ? new T_Elements() : about;
+        @Html.Raw(about.HTML)
+    }
+    @*<div class="row mb80 mb-xs-0">
+            <div class="col-md-8 col-md-offset-2 text-center">
+                <h2>安立特机械设备有限公司</h2>
+                <h4>
+                    国际砂浆施工设备·领导品牌
+                </h4>
+            </div>
         </div>
-    </div>
-    <div class="col-md-6 col-sm-7 p24 pb0">
-        <h3 class="mb40 mb-xs-16 p24 pb0">产品遍布世界各地并得到国内外客户的一致好评！</h3>
-        <p class="lead mb10 p24 pb0">
-            &nbsp; &nbsp; 青岛<b>安立特</b>机械设备有限公司是一家从事干混（粉）砂浆生产线及砂浆施工设备的设计开发、加工制造及销售服务的专业化公司，拥有多项国家专利及正式注册的知名商标。
-        </p>
-        <img alt="Screenshot" class="cast-shadow mb-xs-24 hidden-md hidden-lg" src="~/Content/v1/images/04.jpg" />
-        <p class="lead mb10 p24 pb0 ">
-            &nbsp; &nbsp; 公司自成立以来，先后与多家科研机构及国外知名公司紧密合作，集欧洲先进技术及多年的实践经验于一体，开发出技术先进、性能可靠的砂浆生产线成套设备及砂浆喷涂施工设备。
-        </p>
-        <img alt="Screenshot" class="cast-shadow mb-xs-24 hidden-md hidden-lg" src="~/Content/v1/images/05.jpg" />
-        <p class="lead mb10 p24 pb0 ">
-            &nbsp; &nbsp;安立特机械始终将产品质量和服务看作企业的生存之本，生产过程中严把质量关，重要零部件均采用国际知名品牌，以保证向客户提供质量优良、运行可靠地设备。在产品的服务上，客户的利益是我们的目标，我们的服务追求精细化，从售前的产品咨询、热心服务到售中、售后的技术支持，我们都要求精中求细。<br />&nbsp; &nbsp; 强大的设计开发、生产制造、安装调试、技术维修、定期回访，严格的质量保证和快捷到位的售后服务，每一环节都做了精心安排，解决了客户一系列的后顾之忧。
-        </p>
-        <img alt="Screenshot" class="cast-shadow mb-xs-24 hidden-md hidden-lg" src="~/Content/v1/images/06.jpg" />
-        <p class="lead mb10 p24 pb0  hidden-md hidden-lg">
-            &nbsp; &nbsp; 青岛安立特机械在加工制造过程中实行全面的质量管理，严格执行ISO9001质量关体系的要求，关键的电气元器件和液压、气动部件均采用国际知名品牌，以保证向客户提供质量优良、运行可靠的设备。<br />
-            &nbsp; &nbsp; 经过全体员工的不懈努力，产品以其优异的品质，先进的技术和良好的信誉，赢得了客户的高度肯定，目前产品以遍布世界各地并得到国内外客户的一致好评。
-
-        </p>
-        @*<p class="lead mb10 p24 pb0 hidden-xs">
-                公司秉承着科技兴企、以人为本的宗旨；诚信为本、追求卓越的理念；坚持与时俱进、开拓创新；<b>安立特</b>机械先后与多家科研机构及国内外众多公司紧密合作，集欧洲先进技术及多年的实践经验于一体，开发出技术先进、性能可靠的 <b>砂浆生产线</b> 成套设备及 <b>砂浆喷涂</b> 施工设备。
+            <div class="col-md-6 col-sm-7 p24 pb0">
+            <h3 class="mb40 mb-xs-16 p24 pb0">产品遍布世界各地并得到国内外客户的一致好评！</h3>
+            <p class="lead mb10 p24 pb0">
+                &nbsp; &nbsp; 青岛<b>安立特</b>机械设备有限公司是一家从事干混（粉）砂浆生产线及砂浆施工设备的设计开发、加工制造及销售服务的专业化公司，拥有多项国家专利及正式注册的知名商标。
             </p>
-            <p class="lead mb10 p24 pb0 hidden-xs">
-                安立特机械始终将产品质量和服务看作企业的生存之本，生产过程中严把质量关，重要零部件均采用国际知名品牌，以保证向客户提供质量优良、运行可靠地设备。在产品的服务上，客户的利益是我们的目标，我们的服务追求精细化，从售前的产品咨询、热心服务到售中、售后的技术支持，我们都要求精中求细。强大的设计开发、生产制造、安装调试、技术维修、定期回访，严格的质量保证和快捷到位的售后服务，每一环节都做了精心安排，解决了客户一系列的后顾之忧。
-            </p>*@
-    </div>
-    <div class="col-md-6 col-sm-4 p0">
-        <img alt="Screenshot" class="cast-shadow mb-xs-24" src="~/Content/v1/images/03.jpg" />
-    </div>
+            <img alt="Screenshot" class="cast-shadow mb-xs-24 hidden-md hidden-lg" src="~/Content/v1/images/04.jpg" />
+            <p class="lead mb10 p24 pb0 ">
+                &nbsp; &nbsp; 公司自成立以来，先后与多家科研机构及国外知名公司紧密合作，集欧洲先进技术及多年的实践经验于一体，开发出技术先进、性能可靠的砂浆生产线成套设备及砂浆喷涂施工设备。
+            </p>
+            <img alt="Screenshot" class="cast-shadow mb-xs-24 hidden-md hidden-lg" src="~/Content/v1/images/05.jpg" />
+            <p class="lead mb10 p24 pb0 ">
+                &nbsp; &nbsp;安立特机械始终将产品质量和服务看作企业的生存之本，生产过程中严把质量关，重要零部件均采用国际知名品牌，以保证向客户提供质量优良、运行可靠地设备。在产品的服务上，客户的利益是我们的目标，我们的服务追求精细化，从售前的产品咨询、热心服务到售中、售后的技术支持，我们都要求精中求细。<br />&nbsp; &nbsp; 强大的设计开发、生产制造、安装调试、技术维修、定期回访，严格的质量保证和快捷到位的售后服务，每一环节都做了精心安排，解决了客户一系列的后顾之忧。
+            </p>
+            <img alt="Screenshot" class="cast-shadow mb-xs-24 hidden-md hidden-lg" src="~/Content/v1/images/06.jpg" />
+            <p class="lead mb10 p24 pb0  hidden-md hidden-lg">
+                &nbsp; &nbsp; 青岛安立特机械在加工制造过程中实行全面的质量管理，严格执行ISO9001质量关体系的要求，关键的电气元器件和液压、气动部件均采用国际知名品牌，以保证向客户提供质量优良、运行可靠的设备。<br />
+                &nbsp; &nbsp; 经过全体员工的不懈努力，产品以其优异的品质，先进的技术和良好的信誉，赢得了客户的高度肯定，目前产品以遍布世界各地并得到国内外客户的一致好评。
+            </p>
+        </div>
+        <div class="col-md-6 col-sm-4 p0">
+            <img alt="Screenshot" class="cast-shadow mb-xs-24" src="~/Content/v1/images/03.jpg" />
+        </div>*@
 </section>
 
 <section class="image-bg bg-dark parallax overlay pt120 pb120">
-    <div class="background-image-holder fadeIn">
-        <img alt="Background Image" class="background-image" src="~/Content/v1/images/07.jpg" />
-    </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-4">
-                <h2 class="number">2010年</h2>
-                <p>
-                    自2010年起在线运营，青岛安立特机械现在运行独一无二的创新平台，并为其他拍卖行提供技术基础设施。 我们拥有最具竞争力的拍卖费用结构，使我们与其他拍卖行不同。
-                </p>
-            </div>
-            <div class="col-sm-4">
-                <h2 class="number">14000+</h2>
-                <p>
-                    我们每年为我们的竞标者提供超过14000次，安全交易，轻松出价和全面搜索，以确保不会错过任何机会。
-                </p>
-            </div>
-            <div class="col-sm-4">
-                <h2>1350+</h2>
-                <p>
-                    在这样做的过程中，我们支持超过1350人的网络，他们审查质量，估算价值并确保每件商品的专业处理。
-                </p>
-            </div>
+    @{
+        var introduce = elements.Where(i => i.Code == "introduce").FirstOrDefault();
+        introduce = introduce == null ? new T_Elements() : introduce;
+        @Html.Raw(introduce.HTML)
+    }
+    @*<div class="background-image-holder fadeIn">
+            <img alt="Background Image" class="background-image" src="~/Content/v1/images/07.jpg" />
         </div>
-    </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4">
+                    <h2 class="number">2010年</h2>
+                    <p>
+                        自2010年起在线运营，青岛安立特机械现在运行独一无二的创新平台，并为其他拍卖行提供技术基础设施。 我们拥有最具竞争力的拍卖费用结构，使我们与其他拍卖行不同。
+                    </p>
+                </div>
+                <div class="col-sm-4">
+                    <h2 class="number">14000+</h2>
+                    <p>
+                        我们每年为我们的竞标者提供超过14000次，安全交易，轻松出价和全面搜索，以确保不会错过任何机会。
+                    </p>
+                </div>
+                <div class="col-sm-4">
+                    <h2>1350+</h2>
+                    <p>
+                        在这样做的过程中，我们支持超过1350人的网络，他们审查质量，估算价值并确保每件商品的专业处理。
+                    </p>
+                </div>
+            </div>
+        </div>*@
 </section>
 <section class="pb0 ">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 text-center">
-                <h1>质量和服务企业生存之本</h1>
-                <p class="lead mb64">
-                    安立特机械始终将产品质量和服务看作企业的生存之本。从售前的产品咨询、热心服务到售中、售后的技术支持，我们都要求精中求细。强大的设计开发、生产制造、安装调试、技术维修、定期回访，严格的质量保证和快捷到位的售后服务，每一环节都做了精心安排，解决了客户一系列的后顾之忧。
-                </p>
+    @{
+        var service = elements.Where(i => i.Code == "service").FirstOrDefault();
+        service = service == null ? new T_Elements() : service;
+        @Html.Raw(service.HTML)
+    }
+    @*<div class="container">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 text-center">
+                    <h1>质量和服务企业生存之本</h1>
+                    <p class="lead mb64">
+                        安立特机械始终将产品质量和服务看作企业的生存之本。从售前的产品咨询、热心服务到售中、售后的技术支持，我们都要求精中求细。强大的设计开发、生产制造、安装调试、技术维修、定期回访，严格的质量保证和快捷到位的售后服务，每一环节都做了精心安排，解决了客户一系列的后顾之忧。
+                    </p>
+                </div>
             </div>
-        </div>
-    </div>
+        </div>*@
 </section>
 <section style="padding:0px;">
     <div class="row mb80 mb-xs-0">
@@ -132,60 +158,31 @@
             <h2>行业资讯</h2>
         </div>
     </div>
-    <div class="container">
-        <hr>
-        <div class="row v-align-children margin-bottom-10">
-            <div class="col-sm-3 text-center">
-                <img class="cast-shadow" alt="Screenshot" src="https://nwzimg.wezhan.cn/contents/sitefiles2032/10162089/images/11490274.jpg">
+    @{
+        foreach (var item in news)
+        {
+            <div class="container">
+                <hr>
+                <div class="row v-align-children margin-bottom-10">
+                    <div class="col-sm-3 text-center">
+                        <img class="cast-shadow" alt="Screenshot" src="@item.Cover">
+                    </div>
+                    <div class="col-sm-9">
+                        <h3 class="uppercase" style="padding-top:10px;">@item.Title</h3>
+                        <h5 class="text-gray-dark">@item.Created.ToString("yyyy年MM月dd日")</h5>
+                        <p>@item.SubTitle</p>
+                    </div>
+                </div>
             </div>
-            <div class="col-sm-9">
-                <h3 class="uppercase" style="padding-top:10px;">安立特机械设备有限公司土耳其周年嘉年华 伊斯坦布尔星光之夜熠熠生辉</h3>
-                <h5 class="text-gray-dark">2019年06月14日</h5>
-                <p>2019年6月，安立特机械设备有限公司周年嘉年华-星光之夜在土耳其最大城市伊斯坦布尔成功举行。伊斯坦布尔，作为拜占庭和奥斯曼两大帝国首都长达近1600多年的风水宝地，此次承载着安立特机械设备有限公司一年以来辉煌的发展历程，令这个意义非凡的千人会议充满了历史的厚重感。</p>
-            </div>
-        </div>
-    </div>
-    <div class="container">
-        <hr>
-        <div class="row v-align-children margin-bottom-10">
-            <div class="col-sm-3 text-center">
-                <img class="cast-shadow" alt="Screenshot" src="https://nwzimg.wezhan.cn/contents/sitefiles2032/10162089/images/11490274.jpg">
-            </div>
-            <div class="col-sm-9">
-                <h3 class="uppercase" style="padding-top:10px;">安立特机械设备有限公司土耳其周年嘉年华 伊斯坦布尔星光之夜熠熠生辉</h3>
-                <h5 class="text-gray-dark">2019年06月14日</h5>
-                <p>2019年6月，安立特机械设备有限公司周年嘉年华-星光之夜在土耳其最大城市伊斯坦布尔成功举行。伊斯坦布尔，作为拜占庭和奥斯曼两大帝国首都长达近1600多年的风水宝地，此次承载着安立特机械设备有限公司一年以来辉煌的发展历程，令这个意义非凡的千人会议充满了历史的厚重感。</p>
-            </div>
-        </div>
-    </div>
-    <div class="container">
-        <hr>
-        <div class="row v-align-children margin-bottom-10">
-            <div class="col-sm-3 text-center">
-                <img class="cast-shadow" alt="Screenshot" src="https://nwzimg.wezhan.cn/contents/sitefiles2032/10162089/images/11490274.jpg">
-            </div>
-            <div class="col-sm-9">
-                <h3 class="uppercase" style="padding-top:10px;">安立特机械设备有限公司土耳其周年嘉年华 伊斯坦布尔星光之夜熠熠生辉</h3>
-                <h5 class="text-gray-dark">2019年06月14日</h5>
-                <p>2019年6月，安立特机械设备有限公司周年嘉年华-星光之夜在土耳其最大城市伊斯坦布尔成功举行。伊斯坦布尔，作为拜占庭和奥斯曼两大帝国首都长达近1600多年的风水宝地，此次承载着安立特机械设备有限公司一年以来辉煌的发展历程，令这个意义非凡的千人会议充满了历史的厚重感。</p>
-            </div>
-        </div>
-    </div>
+        }
+    }
 </section>
 
 
 <section class="image-bg bg-dark parallax overlay pt120 pb120">
-
-    <div class="background-image-holder fadeIn">
-        <img alt="Background Image" class="background-image" src="~/Content/v1/images/01.jpg" />
-    </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-12 text-center">
-                <h2 class="uppercase mb8">施工设备</h2>
-                <p class="lead mb40">了解更多关于砂浆施工设备的信息</p>
-                <a class="btn btn-lg btn-white mb0" href="/zh-cn/edu/the-4cs">开始探索</a>
-            </div>
-        </div>
-    </div>
+    @{
+        var more = elements.Where(i => i.Code == "more").FirstOrDefault();
+        more = more == null ? new T_Elements() : more;
+        @Html.Raw(more.HTML)
+    }
 </section>

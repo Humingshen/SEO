@@ -1,12 +1,24 @@
-﻿
+﻿@using Hms.Web.Persistence;
 @{
-    ViewBag.Title = "About Us";
+    var page = ViewBag.Page as T_Pages;
+
+    ViewBag.Title = page.SeoTitle;
+    ViewBag.Description = page.SeoDescriptions;
+    ViewBag.KeyWords = page.SeoKeyWords;
+
+    List<T_Elements> elements = ViewBag.Elements as List<T_Elements>;
+    elements = elements == null ? new List<T_Elements>() : elements;
+    var news = ViewBag.News as List<T_Article>;
+
+    var banner = elements.Where(i => i.Code == "banner").FirstOrDefault();
+    var about = elements.Where(i => i.Code == "about").FirstOrDefault();
+
     Layout = "~/Views/Shared/_Layout_en.cshtml";
 }
 
 <section class="page-title page-title-1 image-bg overlay parallax">
     <div class="background-image-holder">
-        <img alt="Background Image" class="background-image" src="https://hbimg.huabanimg.com/850ece3a0d77f7356c2d5239a66cf16029d3a3ab5ad4d-HLTtrC_fw658">
+        <img alt="关于安立特" class="background-image" src="@(banner==null?"":banner.Src)">
     </div>
     <div class="container">
         <div class="row">
@@ -22,7 +34,8 @@
         <li class="active">About Us</li>
     </ol>
 </section>
-<section>
+@(Html.Raw(about==null?"":about.HTML))
+@*<section>
     <div class="container">
         <div class="row">
             <div class="col-sm-4">
@@ -119,44 +132,31 @@
 
     </div>
 
-</section>
+</section>*@
 <hr class="mb0">
 <section>
     <div class="container">
         <div class="row">
-            <div class="col-md-3 col-sm-12">
+            <div class="col-sm-12">
                 <h5 class="uppercase">
                     <strong>Team</strong>
                 </h5>
             </div>
-            <div class="col-md-9 col-sm-12 mb40 mb-xs-24 p0">
-                <div class="col-sm-6 mb64 mb-xs-24">
-                    <img alt="Pic" src="~img/team-5.jpg" />
-                </div>
-                <div class="col-sm-6 mb64 mb-xs-24">
-                    <h5 class="uppercase mb0">Andrew Parker</h5>
-                    <span class="inline-block mb40 mb-xs-24">Chief Executive Officer</span>
-                    <p>
-                        Andrew Parker is a seasoned business professional with 10+ years of program management and team leadership experience in the technology sector. Recognized for demonstrating a natural aptitude for business development, as well as for navigating strategic negotiations to facilitate optimal outcomes. He has a verifiable history of contributing directly to company growth and expansion throughout his career.
-                    </p>
-                </div>
-            </div>
-            <div class="col-md-9 col-md-push-3 col-sm-12 mb40 mb-xs-24 p0">
-                <div class="col-sm-6 mb64 mb-xs-24">
-                    <img alt="Pic" src="~team/david-rogers.png">
-                </div>
-                <div class="col-sm-6 mb64 mb-xs-24">
-                    <h5 class="uppercase mb0">David Rogers</h5>
-                    <span class="inline-block mb40 mb-xs-24">Chief Operations Officer</span>
-                    <p>
-                        As Senior VP of Investors Relations &amp; Corporate Communication, David oversees all investors and communication matters at Universal and partners closely with the rest of the executive team, board of directors and the media. David joined Universal in June 2016 after serving as head of product and commercial investors and communication, bringing many years’ experience advising on technology-related matters and negotiating a variety of commercial contracts. At Universal, David’s duties include overseeing corporate governance, M&amp;A, licensing, product support, investors relationship, corporate communication and intellectual property matters.
-                    </p>
-                </div>
-            </div>
-
-
+            @{
+                foreach (var item in news)
+                {
+                    <div class="col-md-9 col-md-push-3 col-sm-12 mb40 mb-xs-24 p0">
+                        <div class="col-sm-6 mb64 mb-xs-24">
+                            <img alt="@item.Title" src="@item.Cover">
+                        </div>
+                        <div class="col-sm-6 mb64 mb-xs-24">
+                            <h5 class="uppercase mb0">@item.Title</h5>
+                            <span class="inline-block  mb-xs-24">@item.SubTitle</span>
+                            @(Html.Raw(item.Contents))
+                        </div>
+                    </div>
+                }
+            }
         </div>
-
     </div>
-
 </section>

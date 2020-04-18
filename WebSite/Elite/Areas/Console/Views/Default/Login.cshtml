@@ -36,7 +36,7 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label"><i class="layui-icon layui-icon-username"></i></label>
                         <div class="layui-input-block">
-                            <input name="username" type="text" placeholder="账号" class="layui-input"
+                            <input name="loginId" type="text" placeholder="账号" class="layui-input"
                                    lay-verType="tips" lay-verify="required" required />
                         </div>
                     </div>
@@ -100,12 +100,12 @@
             // 表单提交
             form.on('submit(login-submit)', function (obj) {
                 layer.load(2);
-                $.post("/api//Content/v1/login", obj.field, function (res) {
+                $.post("/api/v1/login", obj.field, function (res) {
                     layer.closeAll('loading');
-                    if (res.code == 200) {
+                    if (res.code == 0) {
                         layer.msg('登录成功', { icon: 1, time: 1500 }, function () {
                             localStorage.setItem("token", res.data);
-                            location.replace('/dashBoard')
+                            location.replace('/console')
                         });
                     } else {
                         layer.msg(res.msg, { icon: 2 });

@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Cryptography;
+using System.Text;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Results;
@@ -35,6 +37,8 @@ namespace Hms.Web.API.Controllers
                 {
                     { "Id",u.Id },
                     { "LoginId", u.LoginId },
+                    { "PassWord",GenerateMD5(u.PassWord) },
+                    { "Created",DateTime.UtcNow},
                     { "iss","hms"},
                     { "exp",new DateTimeOffset(DateTime.UtcNow).AddDays(15)}
                 };
@@ -45,6 +49,51 @@ namespace Hms.Web.API.Controllers
             }
             return Json(new BaseResponse { Code = 1, Msg = "登录失败" }, new Newtonsoft.Json.JsonSerializerSettings() { ContractResolver = new CamelCasePropertyNamesContractResolver(), NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore });
         }
+
+        /// <summary>
+        /// MD5字符串加密
+        /// </summary>
+        /// <param name="txt"></param>
+        /// <returns>加密后字符串</returns>
+        public string GenerateMD5(string txt)
+        {
+            using (MD5 mi = MD5.Create())
+            {
+                byte[] buffer = Encoding.Default.GetBytes(txt);
+                //开始加密
+                byte[] newBuffer = mi.ComputeHash(buffer);
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < newBuffer.Length; i++)
+                {
+                    sb.Append(newBuffer[i].ToString("x2"));
+                }
+                return sb.ToString();
+            }
+        }
+
+
+        [HttpPost]
+        [Route("api/v1/send")]
+        public string Send(CommentDTO dTOs)
+        {
+            if(_db.T_Comment.Any(o=>o.Email==dTOs.email && o.Created.Day == DateTime.Now.Day))
+            {
+                return ("感谢您的留言！");
+            }
+            T_Comment com = new T_Comment()
+            {
+                IP = "",
+                Contents = dTOs.message,
+                Created = DateTime.Now,
+                Reply = "",
+                State = 0,
+                Email = dTOs.email,
+            };
+            _db.T_Comment.Add(com);
+            _db.SaveChanges();
+            return ("感谢您的留言，我们会尽快与您联系！");
+        }
+
 
 
         #region 页面维护

@@ -200,7 +200,7 @@
             // 渲染表格
             var insTb = tableX.render({
                 elem: '#experimentTypeTable',
-                url: '/api//Content/v1/articles',
+                url: '/api/v1/articles',
                 headers: { 'Authorization': localStorage.getItem("token") },
                 page: true,
                 cellMinWidth: 100,
@@ -244,7 +244,7 @@
                          'Authorization': localStorage.getItem("token")
                     },
                     type: "GET",
-                    url: "/api//Content/v1/ashow",
+                    url: "/api/v1/ashow",
                     data:{ id: obj.elem.value, state: obj.elem.checked ? 1 : 0 },
                     success: function (res) {
                       layer.closeAll('loading');

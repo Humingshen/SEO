@@ -30,5 +30,6 @@ namespace Hms.Web.Persistence
         public virtual DbSet<T_Comment> T_Comment { get; set; }
         public virtual DbSet<T_Elements> T_Elements { get; set; }
         public virtual DbSet<T_Pages> T_Pages { get; set; }
+        public virtual DbSet<T_Product> T_Product { get; set; }
     }
 }

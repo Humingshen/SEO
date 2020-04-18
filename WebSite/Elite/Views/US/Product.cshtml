@@ -1,12 +1,24 @@
-﻿
+﻿@using Hms.Web.Persistence;
 @{
-    ViewBag.Title = "Product";
+    var page = ViewBag.Page as T_Pages;
+
+    ViewBag.Title = page.SeoTitle;
+    ViewBag.Description = page.SeoDescriptions;
+    ViewBag.KeyWords = page.SeoKeyWords;
+
+    List<T_Elements> elements = ViewBag.Elements as List<T_Elements>;
+    elements = elements == null ? new List<T_Elements>() : elements;
+    var news = ViewBag.News as List<T_Article>;
+
+    var banner = elements.Where(i => i.Code == "banner").FirstOrDefault();
+    var about = elements.Where(i => i.Code == "introduce").FirstOrDefault();
+
     Layout = "~/Views/Shared/_Layout_en.cshtml";
 }
 
 <section class="page-title page-title-1 image-bg overlay parallax">
     <div class="background-image-holder fadeIn">
-        <img alt="Background Image" class="background-image" src="https://hbimg.huabanimg.com/06289ca174c7c7cb738c8c336df2097a6ac7a67d53d66-7WXDXN_fw658">
+        <img alt="安立特-产品系列" class="background-image" src="@(banner==null?"":banner.Src)">
     </div>
     <div class="container">
         <div class="row">
@@ -27,15 +39,33 @@
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 text-center">
-                <h3>RANGE AND REGULARITY<br>Serving our global diverse customer base</h3>
-                <p class="lead mb80">We prepare and offer for sale a full spectrum of rough diamond products ranging from Very High-End unique Exceptional & Special stones, High-End products destined for luxury retail, Mid-Market products destined for mainstream retail and Low-End products for fashion retail and industrial uses. <br><br>Our product mix caters to the needs of both specialist and generalist customers, and we ensure that the colour, quality, size and model profiles of our rough products closely match our customers' polished outcome requirements, evolving rough product profiles to align with downstream demand trends. Our products are assorted into the following categories that reflect our customers’ utilisation of the goods.</p>
+                @(Html.Raw(about==null?"":about.HTML))
+                @*<h3>RANGE AND REGULARITY<br>Serving our global diverse customer base</h3>
+                    <p class="lead mb80">We prepare and offer for sale a full spectrum of rough diamond products ranging from Very High-End unique Exceptional & Special stones, High-End products destined for luxury retail, Mid-Market products destined for mainstream retail and Low-End products for fashion retail and industrial uses. <br><br>Our product mix caters to the needs of both specialist and generalist customers, and we ensure that the colour, quality, size and model profiles of our rough products closely match our customers' polished outcome requirements, evolving rough product profiles to align with downstream demand trends. Our products are assorted into the following categories that reflect our customers’ utilisation of the goods.</p>*@
             </div>
         </div>
-
     </div>
-
 </section>
-<section class="image-square left">
+@{
+    for (int i = 0; i < news.Count; i++)
+    {
+        <section class="image-square @(i%2==0?"left":"right")">
+            <div class="col-md-6 image">
+                <a href="@news[i].Source" target="_blank">
+                    <div class="background-image-holder fadeIn">
+                        <img alt="image" class="background-image" src="@news[i].Cover">
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-6 col-md-offset-1 content">
+                <h3>@news[i].Title</h3>
+                <p class="mb0">@news[i].SubTitle</p>
+                @Html.Raw(news[i].Contents)
+            </div>
+        </section>
+    }
+}
+@*<section class="image-square left">
     <div class="col-md-6 image">
         <div class="background-image-holder">
             <img alt="image" class="background-image" src="~img/vhighend.jpg" />
@@ -78,4 +108,4 @@
         <h3>LOW-END</h3>
         <p class="mb0">Goods ranging from SI to I qualities in all colours. Goods requiring multiple processes typically destined for fashion and “mass market” retail, or industrial applications.</p>
     </div>
-</section>
+</section>*@

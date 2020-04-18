@@ -1,0 +1,100 @@
+﻿
+@{
+    ViewBag.Title = "Sms";
+    Layout = "~/Areas/Console/Views/Shared/_PageLayout.cshtml";
+}
+<div class="layui-card">
+    <div class="layui-card-header"></div>
+    <div class="layui-card-body">
+        <div class="layui-tab layui-tab-brief" lay-filter="component-tabs-hash">
+            <ul class="layui-tab-title">
+                <li class="" lay-id="11">参数设置</li>
+                <li lay-id="22" class="layui-this">短信记录</li>
+            </ul>
+            <div class="layui-tab-content" >
+                <div class="layui-tab-item">
+                    点击该Tab的任一标题，观察地址栏变化，再刷新页面。选项卡将会自动定位到上一次切换的项
+                </div>
+                <div class="layui-tab-item layui-show">
+                    <div class="layui-fluid">
+                        <div class="layui-row layui-col-space15">
+                            <div class="layui-col-md12">
+                                <div class="layui-card">
+                                    <div class="layui-card-body">
+                                        <table class="layui-hide" id="test-table-totalRow" lay-filter="test-table-totalRow"></table>
+
+                                        <script type="text/html" id="test-table-totalRow-toolbarDemo">
+                                            <div class="layui-btn-container">
+                                                <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
+                                                <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
+                                                <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>
+                                            </div>
+                                        </script>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        layui.use(['index', 'table'], function () {
+            var $ = layui.$
+                , admin = layui.admin
+                , element = layui.element
+                , router = layui.router();
+            var table = layui.table;
+
+            element.render();
+            table.render({
+                elem: '#test-table-totalRow'
+                , url: '/Content/json/demo.json'
+                , toolbar: '#test-table-totalRow-toolbarDemo'
+                , title: '用户数据表'
+                , totalRow: true
+                , cols: [[
+                    { type: 'checkbox', fixed: 'left' }
+                    , { field: 'id', title: 'ID', width: 80, fixed: 'left', unresize: true, sort: true, totalRowText: '合计' }
+                    , { field: 'username', title: '用户名', width: 120, edit: 'text' }
+                    , { field: 'experience', title: '积分', width: 120, sort: true, totalRow: true }
+                    , { field: 'sex', title: '性别', width: 80, edit: 'text', sort: true }
+                    , { field: 'logins', title: '登入次数', width: 100, sort: true, totalRow: true }
+                    , { field: 'sign', title: '签名' }
+                ]]
+                , page: !0, limit: 30, height: "full-220", text: "对不起，加载出现异常！"
+            });
+
+            //头工具栏事件
+            table.on('toolbar(test-table-totalRow)', function (obj) {
+                var checkStatus = table.checkStatus(obj.config.id);
+                switch (obj.event) {
+                    case 'getCheckData':
+                        var data = checkStatus.data;
+                        layer.alert(JSON.stringify(data));
+                        break;
+                    case 'getCheckLength':
+                        var data = checkStatus.data;
+                        layer.msg('选中了：' + data.length + ' 个');
+                        break;
+                    case 'isAll':
+                        layer.msg(checkStatus.isAll ? '全选' : '未全选');
+                        break;
+                };
+            });
+            /* Hash地址的定位 */
+            var layid = router.hash.replace(/^#layid=/, '');
+            layid && element.tabChange('component-tabs-hash', layid);
+
+            element.on('tab(component-tabs-hash)', function (elem) {
+                location.hash = '/' + layui.router().path.join('/') + '#layid=' + $(this).attr('lay-id');
+            });
+        });
+    </script>
+}

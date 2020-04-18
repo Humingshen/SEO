@@ -1,0 +1,388 @@
+﻿
+@{
+    ViewBag.Title = "";
+    Layout = "~/Areas/Console/Views/Shared/_PageLayout.cshtml";
+}
+
+<style type="text/css">
+    .tdImg {
+        width: 50px;
+        height: 50px;
+        max-width: none;
+        cursor: zoom-in;
+    }
+</style>
+
+<!-- 正文开始 -->
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-card-body">
+            <!-- 表格顶部工具栏 -->
+            <div class="layui-form toolbar">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label w-auto">关键词：</label>
+                        <div class="layui-input-inline mr0">
+                            <input name="keyword" class="layui-input" type="text" placeholder="输入关键词" />
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <button class="layui-btn icon-btn" lay-filter="searchSubmit" lay-submit>
+                            <i class="layui-icon">&#xe615;</i>搜索
+                        </button>
+                        <button id="btnAdd" class="layui-btn icon-btn"><i class="layui-icon">&#xe654;</i>添加</button>
+                    </div>
+                </div>
+            </div>
+            <table class="layui-table" id="experimentTypeTable" lay-filter="experimentTypeTable"></table>
+        </div>
+    </div>
+    <blockquote class="layui-elem-quote layui-text" style="margin-top: 15px;background: #fff;">
+        说明
+    </blockquote>
+</div>
+
+<!-- 表格操作列 -->
+<script type="text/html" id="tableBar">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="edit">修改</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+<!-- 表单弹窗 -->
+<script type="text/html" id="modelExpType">
+    <form id="modelExpTypeForm" lay-filter="modelExpTypeForm" class="layui-form model-form">
+        <input name="id" type="hidden" />
+        <div class="layui-form-item">
+            <label class="layui-form-label">标题：</label>
+            <div class="layui-input-block">
+                <input name="title" placeholder="输入标题" type="text" class="layui-input" maxlength="20"
+                       lay-verType="tips" lay-verify="required" />
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">摘要：</label>
+            <div class="layui-input-block">
+                <textarea name="subTitle" placeholder="输入摘要" class="layui-textarea" lay-vertype="tips"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">版本:</label>
+            <div class="layui-input-inline">
+                <select name="version" lay-verify="required" required>
+                    <option value="">选择版本</option>
+                    <option value="zh-CN">中文</option>
+                    <option value="en-US">English</option>
+                </select>
+            </div>
+            <label class="layui-form-label">分类:</label>
+            <div class="layui-input-inline">
+                <select name="tags" lay-verify="required" required>
+                    <option value="">选择分类</option>
+                    <option value="industry">行业资讯</option>
+                    <option value="company">公司新闻</option>
+                    <option value="knowledge">产品系列</option>
+                    <option value="certificate">资质</option>
+                    <option value="media">媒体</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">作者：</label>
+            <div class="layui-input-block">
+                <input name="author" placeholder="输入作者" type="text" class="layui-input" maxlength="20" lay-verType="tips" lay-verify="required" />
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">链接：</label>
+            <div class="layui-input-block">
+                <input name="source" placeholder="输入链接" type="text" class="layui-input" lay-verType="tips" />
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">访客：</label>
+            <div class="layui-input-block">
+                <input name="visitors" placeholder="输入访客数量" type="number" class="layui-input" lay-verType="tips" lay-verify="required" />
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">目标公开:</label>
+            <div class="layui-input-inline" style="display: block;width: auto;float: none;">
+                <input type="radio" name="state" value="0" title="不公开" checked=""><div class="layui-unselect layui-form-radio layui-form-radioed"><i class="layui-anim layui-icon layui-anim-scaleSpring"></i><div>不公开</div></div>
+                <input type="radio" name="state" value="1" title="公开"><div class="layui-unselect layui-form-radio"><i class="layui-anim layui-icon"></i><div>公开</div></div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">封面:</label>
+            <div class="layui-input-block">
+                <button type="button" class="layui-btn" id="test1">上传封面</button>
+                <input id="cover" name="cover" type="hidden" />
+                <img class="layui-upload-img" src="" id="demo1" style="width:100px;">
+                <p id="demoText"></p>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">内容:</label>
+            <div class="layui-input-block">
+                <textarea name="contents" id="demoEditor" lay-verify="content" class="layui-input"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">创建时间：</label>
+            <div class="layui-input-block">
+                <input id="edtDateFormAdv1" name="created" type="text" placeholder="创建时间" class="layui-input  layer-date date-icon" autocomplete="off" lay-vertype="tips" lay-verify="required" required="" lay-key="2">
+            </div>
+        </div>
+        <div class="layui-form-item text-right">
+            <button class="layui-btn layui-btn-primary" type="button" ew-event="closePageDialog">取消</button>
+            <button class="layui-btn" lay-filter="modelExpTypeSubmit" lay-submit>保存</button>
+        </div>
+    </form>
+</script>
+
+<!-- 表格状态列 -->
+<script type="text/html" id="tableState">
+    <input type="checkbox" lay-filter="ckState" value="{{d.id}}" lay-skin="switch"
+           lay-text="正常|锁定" {{d.state==1?'checked':''}} />
+</script>
+
+@section scripts{
+    <script src="~/Content/assets/libs/tinymce/tinymce.min.js"></script>
+    <script>
+        layui.use(['layer', 'form', 'table', 'util', 'admin', 'tableX', 'laydate', 'element', 'upload', 'fileChoose'], function () {
+            var $ = layui.jquery;
+            var layer = layui.layer;
+            var form = layui.form;
+            var table = layui.table;
+            var util = layui.util;
+            var admin = layui.admin;
+            var tableX = layui.tableX;
+            var laydate = layui.laydate;
+            var element = layui.element;
+            var upload = layui.upload;
+            var fileChoose = layui.fileChoose;
+
+            function uploadRender(id) {
+                //普通图片上传
+                upload.render({
+                    elem: '#test1'
+                    , url: '/api/File'
+                    , Headers: { token: id }
+                    , before: function (obj) {
+                        //预读本地文件示例，不支持ie8
+                        //obj.preview(function (index, file, result) {
+                        //    $('#demo1').attr('src', result); //图片链接（base64）
+                        //});
+                    }
+                    , done: function (res) {
+                        //如果上传失败
+                        if (res.errno > 0) {
+                            return layer.msg('上传失败');
+                        }
+                        //上传成功
+                        $('#demo1').attr('src', res.data[0]); //图片链接（base64）
+                    }
+                    , error: function () {
+                        //演示失败状态，并实现重传
+                        var demoText = $('#demoText');
+                        demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+                        demoText.find('.demo-reload').on('click', function () {
+                            uploadInst.upload();
+                        });
+                    }
+                });
+            }
+
+            // 渲染表格
+            var insTb = tableX.render({
+                elem: '#experimentTypeTable',
+                url: '/api/Article',
+                headers: { 'Authorization': localStorage.getItem("token") },
+                page: true,
+                cellMinWidth: 100,
+                cols: [[
+                    { type: 'numbers' },
+                    {
+                        align: 'center', templet: function (d) {
+                            var url = d.cover;
+                            return '<img src="' + url + '" class="tdImg" tb-img/>';
+                        }, title: '封面', width: 90, unresize: false
+                    },
+                    { field: 'title', title: '标题', sort: true },
+                    { field: 'subTitle', title: '摘要' },
+                    { field: 'state', sort: true, templet: '#tableState', title: '状态', width: 100 },
+                    { field: 'tags', title: '标签', minWidth: 140, width: 140 },
+                    {
+                        field: 'created', title: '创建时间', sort: true, templet: function (d) {
+                            return util.toDateString(d.created);
+                        }, width: 180
+                    },
+                    { align: 'center', title: '操作', toolbar: '#tableBar', minWidth: 130, width: 180 }
+                ]]
+            });
+
+            // 搜索
+            form.on('submit(searchSubmit)', function (data) {
+                insTb.reload({ where: data.field, page: { curr: 1 } });
+            });
+
+            // 添加
+            $("#btnAdd").click(function () {
+                showEditModel();
+            });
+
+            // 修改用户状态
+            form.on('switch(ckState)', function (obj) {
+                layer.load(2);
+                $.ajax({
+                    headers: {
+                        'Authorization': localStorage.getItem("token")
+                    },
+                    type: "GET",
+                    url: "/api/Article/StateCk",
+                    data: { id: obj.elem.value },
+                    success: function (res) {
+                        layer.closeAll('loading');
+                        if (res.code == 200) {
+                            layer.msg(res.msg, { icon: 1 });
+                        } else {
+                            layer.msg(res.msg, { icon: 2 });
+                            $(obj.elem).prop('checked', !obj.elem.checked);
+                            form.render('checkbox');
+                        }
+                    }
+                });
+            });
+
+            // 工具条点击事件
+            table.on('tool(experimentTypeTable)', function (obj) {
+
+                var data = obj.data;
+                var layEvent = obj.event;
+                if (layEvent == 'edit') {
+                    showEditModel(data);
+                } else if (layEvent == 'del') {
+                    doDel(data.id);
+                }
+            });
+
+            // 显示表单弹窗
+            function showEditModel(expTpe) {
+                admin.open({
+                    type: 1,
+                    maxmin: true,
+                    resize: true,
+                    offset: '10px',
+                    area: ['96%', '96%'],
+                    title: (expTpe ? '修改' : '添加') + '文章主题',
+                    content: $('#modelExpType').html(),
+                    success: function (layero, dIndex) {
+                        // 回显数据
+                        form.val('modelExpTypeForm', expTpe);
+
+                        var allDate = $(document).find('.layer-date')
+                        allDate.each(function (index, el) {
+                            $(this).removeAttr("lay-key")
+                            laydate.render({
+                                elem: this,
+                                format: 'yyyy-MM-dd'
+                            });
+                        });
+                        laydate.render({
+                            elem: '#edtDateFormAdv1', show: true //直接显示
+                        });
+
+                        uploadRender();
+
+
+                        // 渲染富文本编辑器
+                        tinymce.init({
+                            selector: '#demoEditor',
+                            height: 325,
+                            branding: true,
+                            language: 'zh_CN',
+                            plugins: 'code print preview fullscreen paste searchreplace save autosave link autolink image imagetools media table codesample lists advlist hr charmap emoticons anchor directionality pagebreak quickbars nonbreaking visualblocks visualchars wordcount',
+                            toolbar: 'fullscreen preview code | undo redo | forecolor backcolor | bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullist | formatselect fontselect fontsizeselect | link image media emoticons charmap anchor pagebreak codesample | ltr rtl',
+                            toolbar_drawer: 'sliding',
+                            images_upload_url: '',
+                            file_picker_types: 'media',
+                            file_picker_callback: function (callback, value, meta) {
+                                layer.msg('演示环境不允许上传', { anim: 6 });
+                            }
+                        });
+
+
+                        // 表单提交事件
+                        form.on('submit(modelExpTypeSubmit)', function (data) {
+                            layer.load(2);
+                            data.field.contents = tinymce.get('demoEditor').getContent();
+                            data.field.cover = $('#demo1').attr("src") ? $('#demo1').attr("src") : data.field.cover;
+                            $.ajax({
+                                headers: {
+                                    'Authorization': localStorage.getItem("token")
+                                },
+                                type: "POST",
+                                url: '/api/Article',
+                                dataType: "JSON",
+                                data: data.field,
+                                success: function (res) {
+                                    layer.closeAll('loading');
+                                    if (res.code == 200) {
+                                        layer.close(dIndex);
+                                        insTb.reload({ page: { curr: 1 } });
+                                        layer.msg(res.msg, { icon: 1 });
+                                    } else {
+                                        layer.msg(res.msg, { icon: 2 });
+                                    }
+                                }
+                            });
+                            return false;
+                        });
+                    },
+                    end: function () {
+                        tinymce.get('demoEditor').destroy(false);
+                    }
+                });
+            }
+            // 删除
+            function doDel(experimentTypeId) {
+                layer.confirm('确定要删除吗？', {
+                    shade: .1,
+                    skin: 'layui-layer-admin'
+                }, function (i) {
+                    layer.load(2);
+                    $.ajax({
+                        headers: {
+                            'Authorization': localStorage.getItem("token")
+                        },
+                        type: "POST",
+                        url: "/api/Article/Delete",
+                        data: { id: experimentTypeId },
+                        success: function (res) {
+                            layer.closeAll('loading');
+                            if (res.code == 200) {
+                                layer.msg(res.msg, { icon: 1 });
+                                insTb.reload();
+                            } else {
+                                layer.msg(res.msg, { icon: 2 });
+                                $(obj.elem).prop('checked', !obj.elem.checked);
+                                form.render('checkbox');
+                            }
+                        }
+                    });
+                });
+            }
+            // 点击图片放大
+            $(document).off('click.tbImg').on('click.tbImg', '[tb-img]', function () {
+                layer.photos({ photos: { data: [{ src: $(this).attr('src') }] }, shade: .1, closeBtn: true });
+            });
+
+        });
+
+    </script>
+}
+
+
+<style>
+    body .tox-tinymce-aux {
+        z-index: 19892000;
+    }
+</style>

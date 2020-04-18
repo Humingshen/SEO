@@ -141,9 +141,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\Controllers\AdminController.cs" />
+    <Compile Include="API\Controllers\ArticleController.cs" />
+    <Compile Include="API\Controllers\CommentController.cs" />
+    <Compile Include="API\Controllers\ElementController.cs" />
+    <Compile Include="API\Controllers\FileController.cs" />
+    <Compile Include="API\Controllers\PageController.cs" />
+    <Compile Include="API\Controllers\ProductController.cs" />
     <Compile Include="API\Controllers\V1Controller.cs" />
     <Compile Include="API\Controllers\BaseController.cs" />
     <Compile Include="API\DTOs\BaseRespose.cs" />
+    <Compile Include="API\DTOs\CommentDTO.cs" />
+    <Compile Include="API\DTOs\FileResponse.cs" />
     <Compile Include="API\DTOs\JwtUnit.cs" />
     <Compile Include="API\DTOs\JwtUser.cs" />
     <Compile Include="API\DTOs\LoginDTOs.cs" />
@@ -153,9 +162,16 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Console\ConsoleAreaRegistration.cs" />
+    <Compile Include="Areas\Console\Controllers\AdministratorsController.cs" />
+    <Compile Include="Areas\Console\Controllers\ContentController.cs" />
     <Compile Include="Areas\Console\Controllers\DefaultController.cs" />
+    <Compile Include="Areas\Console\Controllers\ForumController.cs" />
+    <Compile Include="Areas\Console\Controllers\MessageController.cs" />
+    <Compile Include="Areas\Console\Controllers\ProductController.cs" />
     <Compile Include="Areas\Console\Controllers\RssController.cs" />
     <Compile Include="Areas\Console\Controllers\SystemController.cs" />
+    <Compile Include="Areas\Console\Controllers\UserController.cs" />
+    <Compile Include="Areas\Console\Controllers\WorkorderController.cs" />
     <Compile Include="Controllers\CNController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\USController.cs" />
@@ -190,6 +206,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Persistence\T_Pages.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Persistence\T_Product.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -230,15 +249,68 @@
     <Content Include="Content\assets\libs\layui\lay\modules\upload.js" />
     <Content Include="Content\assets\libs\layui\lay\modules\util.js" />
     <Content Include="Content\assets\libs\layui\lay\modules\wangEditor.js" />
-    <Content Include="Content\assets\lib\admin.js" />
-    <Content Include="Content\assets\lib\index.js" />
-    <Content Include="Content\assets\lib\view.js" />
+    <Content Include="Content\assets\libs\tinymce\plugins\advlist\plugin.min.js" />
+    <Content Include="Content\assets\libs\tinymce\plugins\anchor\plugin.min.js" />
+    <Content Include="Content\assets\libs\tinymce\plugins\autolink\plugin.min.js" />
+    <Content Include="Content\assets\libs\tinymce\plugins\autosave\plugin.min.js" />
+    <Content Include="Content\assets\libs\tinymce\plugins\charmap\plugin.min.js" />
+    <Content Include="Content\assets\libs\tinymce\plugins\codesample\plugin.min.js" />
+    <Content Include="Content\assets\libs\tinymce\plugins\code\plugin.min.js" />
+    <Content Include="Content\assets\libs\tinymce\plugins\directionality\plugin.min.js" />
+    <Content Include="Content\assets\libs\tinymce\plugins\emoticons\js\emojis.min.js" />
+    <Content Include="Content\assets\libs\tinymce\plugins\emoticons\plugin.min.js" />
+    <Content Include="Content\assets\libs\tinymce\plugins\fullscreen\plugin.min.js" />
+    <Content Include="Content\assets\libs\tinymce\plugins\hr\plugin.min.js" />
+    <Content Include="Content\assets\libs\tinymce\plugins\imagetools\plugin.min.js" />
+    <Content Include="Content\assets\libs\tinymce\plugins\image\plugin.min.js" />
+    <Content Include="Content\assets\libs\tinymce\plugins\link\plugin.min.js" />
+    <Content Include="Content\assets\libs\tinymce\plugins\lists\plugin.min.js" />
+    <Content Include="Content\assets\libs\tinymce\plugins\media\plugin.min.js" />
+    <Content Include="Content\assets\libs\tinymce\plugins\nonbreaking\plugin.min.js" />
+    <Content Include="Content\assets\libs\tinymce\plugins\pagebreak\plugin.min.js" />
+    <Content Include="Content\assets\libs\tinymce\plugins\paste\plugin.min.js" />
+    <Content Include="Content\assets\libs\tinymce\plugins\preview\plugin.min.js" />
+    <Content Include="Content\assets\libs\tinymce\plugins\print\plugin.min.js" />
+    <Content Include="Content\assets\libs\tinymce\plugins\quickbars\plugin.min.js" />
+    <Content Include="Content\assets\libs\tinymce\plugins\save\plugin.min.js" />
+    <Content Include="Content\assets\libs\tinymce\plugins\searchreplace\plugin.min.js" />
+    <Content Include="Content\assets\libs\tinymce\langs\zh_CN.js" />
+    <Content Include="Content\assets\libs\tinymce\plugins\table\plugin.min.js" />
+    <Content Include="Content\assets\libs\tinymce\plugins\visualblocks\plugin.min.js" />
+    <Content Include="Content\assets\libs\tinymce\plugins\visualchars\plugin.min.js" />
+    <Content Include="Content\assets\libs\tinymce\plugins\wordcount\plugin.min.js" />
+    <Content Include="Content\assets\libs\tinymce\skins\content\default\content.min.css" />
+    <Content Include="Content\assets\libs\tinymce\skins\ui\oxide\content.min.css" />
+    <Content Include="Content\assets\libs\tinymce\skins\ui\oxide\skin.min.css" />
+    <Content Include="Content\assets\libs\tinymce\themes\silver\theme.min.js" />
+    <Content Include="Content\assets\libs\tinymce\tinymce.min.js" />
+    <Content Include="Content\assets\module\admin317.css" />
+    <Content Include="Content\assets\module\cascader\cascader.js" />
+    <Content Include="Content\assets\module\city-picker\city-picker.js" />
+    <Content Include="Content\assets\module\ckeditor\ckeditor.js" />
+    <Content Include="Content\assets\module\Cropper\Cropper.js" />
+    <Content Include="Content\assets\module\dataGrid.js" />
+    <Content Include="Content\assets\module\dropdown\dropdown.css" />
+    <Content Include="Content\assets\module\dropdown\dropdown.js" />
+    <Content Include="Content\assets\module\dtree\dtree.js" />
+    <Content Include="Content\assets\module\excel.js" />
+    <Content Include="Content\assets\module\formSelects\formSelects-v4.js" />
+    <Content Include="Content\assets\module\introJs\introJs.js" />
+    <Content Include="Content\assets\module\notice\notice.js" />
+    <Content Include="Content\assets\module\Split\Split.js" />
+    <Content Include="Content\assets\module\step-lay\step.js" />
+    <Content Include="Content\assets\module\steps\steps.js" />
+    <Content Include="Content\assets\module\subadmin.css" />
+    <Content Include="Content\assets\module\tableSelect\tableSelect.js" />
+    <Content Include="Content\assets\module\tagsInput\tagsInput.js" />
+    <Content Include="Content\assets\module\treetable-lay\treetable.js" />
+    <Content Include="Content\assets\module\treeTable\treeTable.css" />
+    <Content Include="Content\assets\module\treeTable\treeTable.js" />
+    <Content Include="Content\assets\module\xmSelect.js" />
     <Content Include="Content\assets\style\admin.css" />
-    <Content Include="Content\assets\modules\common.js" />
-    <Content Include="Content\assets\modules\console.js" />
-    <Content Include="Content\assets\module\admin-a.js" />
-    <Content Include="Content\assets\module\admin.css" />
     <Content Include="Content\assets\module\admin.js" />
+    <Content Include="Content\assets\module\admin.css" />
+    <Content Include="Content\assets\module\admin-1.js" />
     <Content Include="Content\assets\module\contextMenu.js" />
     <Content Include="Content\assets\module\fileChoose\fileChoose.js" />
     <Content Include="Content\assets\module\img\icon_date.png" />
@@ -248,6 +320,17 @@
     <Content Include="Content\assets\module\zTree\css\zTreeStyle\img\zTreeStandard.png" />
     <Content Include="Content\assets\module\zTree\css\zTreeStyle\zTreeStyle.css" />
     <Content Include="Content\assets\module\zTree\zTree.js" />
+    <Content Include="Areas\Console\Views\Product\Editor.cshtml" />
+    <Content Include="Areas\Console\Views\System\Dictionary.cshtml" />
+    <Content Include="Content\json\dict.json" />
+    <Content Include="Areas\Console\Views\System\Logs.cshtml" />
+    <Content Include="Content\json\login-record.json" />
+    <Content Include="Areas\Console\Views\Administrators\Authorities.cshtml" />
+    <Content Include="Content\json\authorities.json" />
+    <Content Include="Areas\Console\Views\Content\Index.cshtml" />
+    <Content Include="Content\json\data-grid2.json" />
+    <Content Include="Content\json\data-grid3.json" />
+    <None Include="Content\json\demo.json" />
     <Content Include="Content\v1\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\v1\images\01.jpg" />
     <Content Include="Content\v1\images\02.jpg" />
@@ -263,7 +346,7 @@
     <Content Include="Content\v1\images\logo-dark1.png" />
     <Content Include="Content\v1\images\logo-light1.png" />
     <Content Include="Content\v1\images\微信图片_20200321151332.png" />
-    <Content Include="favicon1.ico" />
+    <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\v1\css\default.css" />
     <Content Include="Content\v1\css\select2.min.css" />
@@ -288,7 +371,6 @@
     <Content Include="Content\v1\js\spectragram.min.js" />
     <Content Include="Content\v1\js\twitterfetcher.min.js" />
     <Content Include="Content\v1\js\ytplayer.min.js" />
-    <Content Include="html\console.html" />
     <Content Include="Persistence\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model1.edmx</DependentUpon>
@@ -316,6 +398,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\assets\module\Drag\" />
     <Folder Include="Temples\Elite\" />
   </ItemGroup>
   <ItemGroup>
@@ -354,6 +437,33 @@
     <Content Include="Areas\Console\Views\System\Product.cshtml" />
     <Content Include="Areas\Console\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Console\Views\Default\Home.cshtml" />
+    <Content Include="Areas\Console\Views\Content\List.cshtml" />
+    <Content Include="Areas\Console\Views\Content\Tags.cshtml" />
+    <Content Include="Areas\Console\Views\Content\Comment.cshtml" />
+    <Content Include="Areas\Console\Views\Forum\List.cshtml" />
+    <Content Include="Areas\Console\Views\Forum\Replys.cshtml" />
+    <Content Include="Areas\Console\Views\System\Email.cshtml" />
+    <Content Include="Areas\Console\Views\System\Sms.cshtml" />
+    <Content Include="Areas\Console\Views\System\WebSite.cshtml" />
+    <Content Include="Areas\Console\Views\Product\Comment.cshtml" />
+    <Content Include="Areas\Console\Views\Product\List.cshtml" />
+    <Content Include="Areas\Console\Views\Product\Tags.cshtml" />
+    <Content Include="Areas\Console\Views\Message\Index.cshtml" />
+    <Content Include="Areas\Console\Views\Workorder\List.cshtml" />
+    <Content Include="Areas\Console\Views\User\Info.cshtml" />
+    <Content Include="Areas\Console\Views\User\PassWord.cshtml" />
+    <Content Include="Areas\Console\Views\User\List.cshtml" />
+    <Content Include="Areas\Console\Views\Administrators\List.cshtml" />
+    <Content Include="Areas\Console\Views\Administrators\Role.cshtml" />
+    <Content Include="Content\json\user.json" />
+    <Content Include="Content\json\role.json" />
+    <Content Include="Areas\Console\Views\Administrators\RoleForm.cshtml" />
+    <Content Include="Content\json\webuser.json" />
+    <Content Include="Areas\Console\Views\User\UserForm.cshtml" />
+    <Content Include="Content\json\dict-data.json" />
+    <Content Include="Content\json\ok.json" />
+    <Content Include="Content\json\role-auth-tree.json" />
+    <Content Include="Content\json\data-grid1.json" />
     <None Include="packages.config" />
     <Content Include="Views\Shared\_Layout_cn.cshtml" />
     <Content Include="Views\Shared\_Layout_en.cshtml" />

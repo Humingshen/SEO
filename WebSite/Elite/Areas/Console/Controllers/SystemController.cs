@@ -27,19 +27,29 @@ namespace Hms.Web.Areas.Console.Controllers
         /// 内容管理
         /// </summary>
         /// <returns></returns>
-        public ActionResult Article()
+        public ActionResult WebSite()
         {
             return View();
         }
-        public ActionResult Comment()
+        public ActionResult Email()
         {
             return View();
         }
-        public ActionResult Product()
+        public ActionResult Sms()
         {
             return View();
         }
         public ActionResult Element()
+        {
+            return View();
+        }
+
+        public ActionResult Dictionary()
+        {
+            return View();
+        }
+
+        public ActionResult Logs()
         {
             return View();
         }

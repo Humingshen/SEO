@@ -4,13 +4,13 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="faaf3864e3c1488db1a8f344875b1702" Name="Diagram1">
+      <Diagram DiagramId="339d38040d25440cbfd1c64517e9675d" Name="Diagram1">
         <EntityTypeShape EntityType="WebSiteModel.T_Admin" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="WebSiteModel.T_Article" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="WebSiteModel.T_Comment" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="WebSiteModel.T_Elements" Width="1.5" PointX="4.75" PointY="4.75" IsExpanded="true" />
         <EntityTypeShape EntityType="WebSiteModel.T_Pages" Width="1.5" PointX="0.75" PointY="5.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="WebSiteModel.T_Product" Width="1.5" PointX="7.375" PointY="0.75" />
+        <EntityTypeShape EntityType="WebSiteModel.T_Product" Width="1.5" PointX="6.75" PointY="0.75" IsExpanded="true" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

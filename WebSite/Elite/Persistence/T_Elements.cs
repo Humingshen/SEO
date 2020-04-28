@@ -18,12 +18,11 @@ namespace Hms.Web.Persistence
         public int PageId { get; set; }
         public string Title { get; set; }
         public string Code { get; set; }
-
-        private string html;
-        public string HTML { get { return html + ""; } set { html = value; } }
+        public string HTML { get; set; }
         public string Src { get; set; }
         public string Url { get; set; }
         public int SEQ { get; set; }
         public bool Enable { get; set; }
+        public string Tags { get; set; }
     }
 }

@@ -330,6 +330,7 @@
     <Content Include="Areas\Console\Views\Content\Index.cshtml" />
     <Content Include="Content\json\data-grid2.json" />
     <Content Include="Content\json\data-grid3.json" />
+    <Content Include="Content\doc\蓝钻1314.xmind" />
     <None Include="Content\json\demo.json" />
     <Content Include="Content\v1\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\v1\images\01.jpg" />

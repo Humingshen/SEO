@@ -345,7 +345,8 @@
     <Content Include="Content\v1\images\banner-ho.gif" />
     <Content Include="Content\v1\images\bg.jpg" />
     <Content Include="Content\v1\images\logo-dark1.png" />
-    <Content Include="Content\v1\images\logo-light1.png" />
+    <Content Include="Content\v1\images\logo-light.png" />
+    <Content Include="Content\v1\images\logo-dark.png" />
     <Content Include="Content\v1\images\微信图片_20200321151332.png" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
@@ -404,6 +405,7 @@
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <Content Include="Views\CN\Info.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

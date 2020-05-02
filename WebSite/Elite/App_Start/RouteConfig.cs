@@ -17,7 +17,7 @@ namespace Elite
                 "ActionOnly",
                 "{action}/{id}",
                 new { controller = "CN", action = "Index", id = UrlParameter.Optional },
-                new { action = "Index|About|Contact|Brand|Service|Product|News|Media" }
+                new { action = "Index|About|Contact|Brand|Info|Product|News|Media" }
             );
             routes.MapRoute(
                 name: "CN",

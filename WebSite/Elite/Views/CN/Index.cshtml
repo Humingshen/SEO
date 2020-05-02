@@ -9,6 +9,7 @@
     List<T_Elements> elements = ViewBag.Elements as List<T_Elements>;
     elements = elements == null ? new List<T_Elements>() : elements;
     var news = ViewBag.News as List<T_Article>;
+    var products = ViewBag.Products as List<T_Article>;
 
     Layout = "~/Views/Shared/_Layout_cn.cshtml";
 }
@@ -135,22 +136,53 @@
             </div>
         </div>*@
 </section>
-<section class="pb0 ">
-    @{
-        var service = elements.Where(i => i.Code == "service").FirstOrDefault();
-        service = service == null ? new T_Elements() : service;
-        @Html.Raw(service.HTML)
-    }
-    @*<div class="container">
-            <div class="row">
-                <div class="col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 text-center">
-                    <h1>质量和服务企业生存之本</h1>
-                    <p class="lead mb64">
-                        安立特机械始终将产品质量和服务看作企业的生存之本。从售前的产品咨询、热心服务到售中、售后的技术支持，我们都要求精中求细。强大的设计开发、生产制造、安装调试、技术维修、定期回访，严格的质量保证和快捷到位的售后服务，每一环节都做了精心安排，解决了客户一系列的后顾之忧。
-                    </p>
+
+<style>
+    .portfolio-entry{ min-height:300px; margin:10px; background-size:cover;}
+        .portfolio-entry .desc {
+            text-align:center;
+            background:#FFF;
+            opacity:0.5;
+            display:block;
+            font-size:16px;
+            color: #000;
+            font-weight: 400;
+            line-height:35px;
+        }
+</style>
+<section id="fh5co-explore" data-section="explore">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 section-heading text-center">
+                <h2 class="animate-box fadeInUp animated-fast">产品展示</h2>
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2 subtext animate-box fadeInUp animated-fast">
+                        <h4>全自动砂浆喷涂机(N5S/N9S/N10) &水平连续混浆机(M4/M4P)</h4>
+                    </div>
                 </div>
             </div>
-        </div>*@
+        </div>
+    </div>
+    <div class="fh5co-project">
+        <div class="container">
+            <div class="row">
+                @foreach (var item in products)
+                {
+                    <div class="col-md-4">
+                        <div class="fh5co-portfolio animate-box fadeInUp animated-fast">
+                            <a href="/product">
+                                <div class="portfolio-entry" style="background-image: url('@item.Cover');">
+                                    <div class="desc">
+                                        <p>@item.Title</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
 </section>
 <section style="padding:0px;">
     <div class="row mb80 mb-xs-0">

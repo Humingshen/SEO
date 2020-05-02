@@ -8,7 +8,7 @@
 
     List<T_Elements> elements = ViewBag.Elements as List<T_Elements>;
     elements = elements == null ? new List<T_Elements>() : elements;
-    var news = ViewBag.News as List<T_Article>;
+    var news = ViewBag.News as T_Article;
 
     var banner = elements.Where(i => i.Code == "banner").FirstOrDefault();
 
@@ -33,25 +33,27 @@
         <li>新闻资讯</li>
     </ol>
 </section>
-<section class="news-section">
-    @{
-        foreach (var item in news)
-        {
-            <div class="container">
-                <div class="row v-align-children margin-bottom-10">
-                    <div class="col-sm-3 text-center">
-                            <a href="/info/@item.Id"><img class="cast-shadow" alt="Screenshot" src="@item.Cover"></a>
-                    </div>
-                    <div class="col-sm-9">
-                        <h3 class="uppercase"><a href="/info/@item.Id">@item.Title</a></h3>
-                        <h5 class="text-gray-dark">@item.Created.ToString("yyyy年MM月dd日")</h5>
-                        <p>@item.SubTitle</p>
-
-                    </div>
-                </div>
-                <hr>
+<section class="pb0  bg-secondary">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 text-center">
+                <h4>@news.Title</h4>
+                @news.Created.ToString("yyyy-MM-dd") &nbsp; By @news.Author
+              
+                <p class="lead mb64">
+                    @news.SubTitle
+                </p>
             </div>
-        }
-    }
+        </div>
+    </div>
 </section>
-
+<section class="pb0">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 text-center">
+                @Html.Raw(news.Contents)
+            </div>
+        </div>
+    </div>
+    <div style="height:20px;"></div>
+</section>

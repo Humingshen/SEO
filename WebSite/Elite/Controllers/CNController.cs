@@ -20,6 +20,8 @@ namespace Hms.Web.Controllers
             ViewBag.Page = _db.T_Pages.Find(1);
             ViewBag.Elements = _db.T_Elements.Where(i => i.PageId == 1 && i.Enable).ToList();
             var news = _db.T_Article.Where(i => i.Tags == "industry" && i.State == 1 && i.Version == version).OrderByDescending(o => o.Created).ToList();
+            var products = _db.T_Article.Where(i => i.Tags == "knowledge" && i.State == 1 && i.Version == version).OrderByDescending(o => o.Created).ToList();
+            ViewBag.Products = products;
             ViewBag.News = news.Skip(0).Take(3).ToList();
             return View();
         }
@@ -52,7 +54,15 @@ namespace Hms.Web.Controllers
             ViewBag.News = news;
             return View();
         }
-
+        // GET: CN
+        public ActionResult Info(int id)
+        {
+            ViewBag.Page = _db.T_Pages.Find(4);
+            ViewBag.Elements = _db.T_Elements.Where(i => i.PageId == 4 && i.Enable).ToList();
+            var news = _db.T_Article.Find(id);
+            ViewBag.News = news;
+            return View();
+        }
         // GET: CN
         public ActionResult Media()
         {
